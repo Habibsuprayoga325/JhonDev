@@ -5,6 +5,15 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Brand tokens (lihat :root) — didaftarkan agar Tailwind menghasilkan
+     utility bg-brand-*, text-brand-*, border-brand-*. */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-soft: var(--brand-navy-soft);
+  --color-brand-light: var(--brand-light);
+  --color-brand-border: var(--brand-border);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);

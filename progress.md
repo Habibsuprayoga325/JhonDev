@@ -159,3 +159,57 @@ Base UI memakai prop **`render`**, bukan `asChild` (Radix).
 | 🟡 Sedang | Logo masih monogram teks "JD", asset logo asli belum diimpor. |
 | 🟡 Sedang | Mobile menu **belum diuji di perangkat sentuh sungguhan** — hanya diuji lewat render HTML. Perlu dicek manual di HP. |
 | 🟠 Info | Tombol CTA desktop masih terlihat di mobile (bersamaan dengan hamburger). Kalau terasa penuh, sembunyikan CTA di <640px. |
+
+---
+
+## 2026-10-01 — Step 1.3: Hero Section
+
+### Yang dikerjakan
+
+1. **`src/components/sections/hero.tsx`** — eyebrow pill, H1 dengan sorotan
+   kata kunci, subheadline, dua CTA, reassurance line ("Balasan dalam 24 jam
+   kerja · Tanpa biaya konsultasi"), dan trust bar 3 angka.
+2. **`src/app/page.tsx`** — sekarang hanya merakit `<Hero />` + placeholder.
+
+### Copy rationale
+
+H1 ditulis **"Sistem digital untuk bisnis yang sudah berjalan"** — bukan
+"kami mengerjakan apa saja". Ini menyasar persona B (owner yang sudah punya
+sistem tapi berantakan), dan sengaja mengecualikan yang baru mulai, supaya
+pelanggan tidak salah datang.
+
+Subheadline menyebut **printer, kasir, gudang** karena itu diferensiator nyata
+JohnDev (CV: CUPS + integrasi printer) yang tidak bisa diklaim agency web biasa.
+
+Trust bar memakai klaim yang bisa diverifikasi dari CV. **Angka tidak boleh
+ditambah tanpa bukti** — klausa ini dikomentari di source.
+
+### Bug yang ditemukan: brand tokens tidak ter-generate
+
+`--brand-*` sudah ada di `:root` `globals.css`, tapi **tidak terdaftar di
+`@theme inline`**. Tailwind v4 hanya membuat utility dari token yang terdaftar
+di `@theme`, jadi `bg-brand-light`, `text-brand-primary`, dan
+`border-brand-border` **tidak menghasilkan CSS sama sekali** — build tetap hijau.
+
+Terdeteksi karena verifikasi CSS hasil build, bukan dari kode saja.
+Perbaikan: daftarkan keenam token brand di `@theme inline`.
+
+**Pelajaran:** di Tailwind v4, variabel CSS di `:root` **tidak otomatis**
+menjadi utility class. Cek `.next/**/*.css` setelah pakai token kustom.
+
+### Verifikasi
+
+- `npm run build` → ✅ (setelah `rm -rf .next` untuk memastikan bukan cache)
+- `npm run lint` → ✅ 0 error
+- Cek CSS hasil build: `bg-brand-light`, `text-brand-primary`, `border-brand-border`,
+  `text-balance`, `text-pretty` → semua ≥1 (sebelumnya 0).
+- Render: seluruh copy hero, trust bar, dan WA link → semua ada.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | `/layanan`, `/harga`, `/kontak`, `/privacy`, `/terms` masih **404**. Tombol "Lihat Layanan" sudah menunjuk ke sana. |
+| 🟡 Sedang | Trust bar belum di-link ke bukti (case study). Untuk sekarang klaim ada tapi belum bisa diklik — Step 3.4. |
+| 🟡 Sedang | Hero belum diuji visual di layar nyata (browser tool timeout di sesi ini). |
+| 🟠 Info | `text-balance`/`text-pretty` butuh browser modern; di browser lama headline tidak rapi — degradasi aman (justify normal). |
