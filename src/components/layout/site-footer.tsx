@@ -53,6 +53,14 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
+                  href={`tel:+${siteConfig.contact.whatsapp}`}
+                  className="transition-colors hover:text-foreground"
+                >
+                  Telepon {siteConfig.contact.whatsappDisplay}
+                </a>
+              </li>
+              <li>
+                <a
                   href={`mailto:${siteConfig.contact.email}`}
                   className="transition-colors hover:text-foreground"
                 >

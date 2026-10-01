@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { MobileNav } from "@/components/layout/mobile-nav";
 import { cn } from "@/lib/utils";
 import { CTA_MESSAGE_DEFAULT, siteConfig, whatsappLink } from "@/lib/site-config";
 
@@ -56,6 +57,8 @@ export function SiteHeader() {
         >
           Konsultasi Gratis
         </a>
+
+        <MobileNav />
       </div>
     </header>
   );

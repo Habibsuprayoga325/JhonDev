@@ -14,7 +14,7 @@ export const siteConfig = {
 
   contact: {
     /** Format internasional tanpa "+" dan tanpa spasi — untuk wa.me deep link. */
-    whatsapp: "628784607382",
+    whatsapp: "6287846073782",
     /** Format tampilan ke pengguna. */
     whatsappDisplay: "+62 878-4607-3782",
     email: "habibsuprayoga3@gmail.com",
@@ -43,6 +43,23 @@ export const siteConfig = {
 export function whatsappLink(message: string): string {
   return `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
 }
+/**
+ * Guard: nomor WhatsApp harus format internasional tanpa "+" dan tanpa spasi.
+ *
+ * Nomor Indonesia = 62 + 10–12 digit. Angka yang salah (kurang satu digit)
+ * tetap menghasilkan URL yang valid secara sintaks, tapi WhatsApp akan
+ * menampilkan "isn't on WhatsApp" — sulit dideteksi dari sisi klien.
+ * Karena itu bentuk divalidasi saat build, bukan saat klik.
+ */
+const _whatsappDigits = siteConfig.contact.whatsapp;
+if (!/^\d{11,15}$/.test(_whatsappDigits)) {
+  throw new Error(
+    `siteConfig.contact.whatsapp tidak valid: "${_whatsappDigits}". ` +
+      `Harus 11–15 digit (format internasional tanpa "+"). ` +
+      `Periksa juga siteConfig.contact.whatsappDisplay agar konsisten.`,
+  );
+}
+
 
 /** Pesan default untuk tombol CTA utama. */
 export const CTA_MESSAGE_DEFAULT =

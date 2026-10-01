@@ -104,3 +104,58 @@ Pola ini yang dipakai untuk semua CTA link di project — hindari `asChild` ke d
 | 🟡 Sedang | `/privacy`, `/terms`, `#layanan`, `#harga`, `#kontak` semua **404** saat ini — footer & nav sudah menautkan ke sana. Akan hilang sendiri begitu Step 2–5 membangun section/page-nya. |
 | 🟡 Sedang | Logo masih teks monogram "JD" placeholder — asset logo asli belum diimpor. |
 | 🟡 Sedang | Nav mobile disembunyikan (`hidden md:flex`) dan **belum ada hamburger menu** — harus diselesaikan di Step 1.2. |
+
+---
+
+## 2026-10-01 — Fix Nomor WhatsApp + Step 1.2: Mobile Menu
+
+### Bug: nomor WhatsApp tidak bisa dihubungi
+
+**Gejala:** klik CTA → WhatsApp tampil *"The number +62 878-4607-382 isn't on WhatsApp"*.
+
+**Akar masalah:** kelalaian transkripsi saat memasukkan nomor dari CV ke `site-config.ts`.
+Dua field punya format berbeda, hanya satu yang salah:
+
+| Field | Sebelum | Sesudah | Status |
+|---|---|---|---|
+| `whatsappDisplay` | `+62 878-4607-3782` | tidak berubah | ✅ benar sejak awal |
+| `whatsapp` (untuk URL) | `628784607382` (10 digit) | `6287846073782` (11 digit) | ❌ Fixed |
+
+Nomor di URL kehilangan satu digit `7`. URL-nya tetap **valid secara sintaks**,
+jadi build dan lint tidak pernah menangkapnya — hanya WhatsApp yang menolak.
+Nomor yang aktif tetap tampil benar karena sumbernya `whatsappDisplay`.
+
+**Pencegahan:** guard di `site-config.ts` yang `throw` saat build kalau
+`whatsapp` bukan 11–15 digit. Bug serupa akan gagal di CI, bukan di tangan klien.
+
+### Step 1.2 — Mobile menu
+
+1. **`src/components/ui/sheet.tsx`** — shadcn/ui Sheet (Base UI drawer).
+   Dipilih karena sudah menyediakan focus trap, Escape-to-close, scroll lock, dan ARIA.
+2. **`src/components/layout/mobile-nav.tsx`** — tombol hamburger (SVG inline,
+   `aria-label="Buka menu navigasi"`), panel slide-in dari kanan, 4 item nav
+   + CTA WhatsApp + link telepon.
+3. **`site-header.tsx`** — `MobileNav` dipasang; nav desktop tetap `hidden md:flex`.
+4. **`site-footer.tsx`** — tambah link `tel:` sebagai alternatif kalau WhatsApp
+   tidak terpasang di perangkat pengguna.
+
+### Catatan Base UI (lanjutan dari Step 1.1)
+
+Base UI memakai prop **`render`**, bukan `asChild` (Radix).
+`SheetTrigger render={<button />}` — itulah polanya di `mobile-nav.tsx`.
+
+### Verifikasi
+
+- `npm run build` → ✅ (2×TypeScript error `SheetClose` belum di-import, sudah diperbaiki)
+- `npm run lint` → ✅ 0 error
+- Render: `wa.me/6287846073782` (11 digit), `tel:+6287846073782`,
+  `aria-label="Buka menu navigasi"` — semua ada.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | `/privacy`, `/terms`, `#layanan`, `#harga`, `#kontak` masih **404**. |
+| 🟡 Sedang | Logo masih monogram teks "JD", asset logo asli belum diimpor. |
+| 🟡 Sedang | Mobile menu **belum diuji di perangkat sentuh sungguhan** — hanya diuji lewat render HTML. Perlu dicek manual di HP. |
+| 🟠 Info | Tombol CTA desktop masih terlihat di mobile (bersamaan dengan hamburger). Kalau terasa penuh, sembunyikan CTA di <640px. |
