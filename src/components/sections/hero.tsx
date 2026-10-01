@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CTA_MESSAGE_DEFAULT, siteConfig, whatsappLink } from "@/lib/site-config";
+import { CTA_MESSAGE_DEFAULT, whatsappLink } from "@/lib/site-config";
 
 /**
  * Angka trust bar. Semua berbasis klaim yang bisa diverifikasi —
@@ -8,9 +8,9 @@ import { CTA_MESSAGE_DEFAULT, siteConfig, whatsappLink } from "@/lib/site-config
  * Jangan tambah angka baru tanpa bukti yang bisa ditunjukkan ke calon klien.
  */
 const trustPoints = [
-  { value: "4+", label: "Sistem produksi live" },
-  { value: "1.000+", label: "Siswa & trainee dilatih" },
-  { value: "6+", label: "Stack yang dikuasai" },
+  { value: "4+", label: "Sistem produksi berjalan hari ini" },
+  { value: "100%", label: "Dikerjakan 1 orang, bukan dioper ke vendor lain" },
+  { value: "1.000+", label: "Siswa & trainee yang saya latih" },
 ] as const;
 
 export function Hero() {
@@ -26,21 +26,21 @@ export function Hero() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-brand-light px-3.5 py-1.5 text-xs font-medium text-brand-primary">
             <span className="size-1.5 rounded-full bg-brand-primary" />
-            {siteConfig.legalName}
+            4+ sistem produksi sudah jalan untuk klien kami
           </p>
 
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
-            Sistem digital untuk bisnis yang{" "}
-            <span className="text-brand-primary">sudah berjalan</span>
+            Order numpuk di WhatsApp, stok tidak sinkron?
+            <br className="hidden sm:block" />{" "}
+            <span className="text-brand-primary">
+              Saya yang bikin jalan, dari server sampai printer.
+            </span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-pretty text-muted-foreground">
-            Kami memindahkan operasional kertas, WhatsApp, dan catatanmanual Anda
-            ke sistem yang benar-benar jalan — termasuk di{" "}
-            <strong className="font-medium text-foreground">
-              printer, kasir, dan gudang
-            </strong>{" "}
-            Anda. Bukan sekadar website.
+            Bukan sekadar website. POS, ERP, aplikasi kasir, sampai integrasi
+            printer dan gudang — dikerjakan satu orang, dari requirement sampai
+            sistem benar-benar dipakai karyawan Anda.
           </p>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -53,7 +53,7 @@ export function Hero() {
                 "h-12 w-full px-8 text-base sm:w-auto",
               )}
             >
-              Konsultasi Gratis
+              Ceritakan Masalah Anda
             </a>
             <a
               href="#layanan"
@@ -62,12 +62,12 @@ export function Hero() {
                 "h-12 w-full px-8 text-base sm:w-auto",
               )}
             >
-              Lihat Layanan
+              Lihat yang Bisa Saya Kerjakan
             </a>
           </div>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            Balasan dalam 24 jam kerja &middot; Tanpa biaya konsultasi
+            Balasan dalam 24 jam kerja &middot; Konsultasi pertama gratis
           </p>
         </div>
 

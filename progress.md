@@ -213,3 +213,73 @@ menjadi utility class. Cek `.next/**/*.css` setelah pakai token kustom.
 | 🟡 Sedang | Trust bar belum di-link ke bukti (case study). Untuk sekarang klaim ada tapi belum bisa diklik — Step 3.4. |
 | 🟡 Sedang | Hero belum diuji visual di layar nyata (browser tool timeout di sesi ini). |
 | 🟠 Info | `text-balance`/`text-pretty` butuh browser modern; di browser lama headline tidak rapi — degradasi aman (justify normal). |
+
+---
+
+## 2026-10-01 — Step 1.3 (revisi): copy hero
+
+### Masalah
+
+John: *"kata-katanya masih kurang untuk mengajak customer"*.
+
+**Akar masalah:** copy sebelumnya **deskriptif**, bukan persuasif. Ia
+menjelaskan apa yang John kerjakan ("memindahkan operasional kertas ke
+sistem"), padahal calon klien tidak-care apa yang dikerjakan — dia peduli
+**rasa sakitnya sendiri**.
+
+Bandingkan pola hero yang dipakai pemasar besar (Shopify: *"Be the next
+AI all-star"*, *"Get started fast"*): pendek, menantang, dan menyasar
+**kedudukan** — bukan menjelaskan arsitektur sistem.
+
+### Copy baru
+
+| Elemen | Lama | Baru |
+|---|---|---|
+| Eyebrow | JohnDev Technology Solution | 4+ sistem produksi sudah jalan untuk klien kami |
+| H1 | "Sistem digital untuk bisnis yang sudah berjalan" | "Order numpuk di WhatsApp, stok tidak sinkron? **Saya yang bikin jalan, dari server sampai printer.**" |
+| Subheadline | "Kami memindahkan operasional kertas, WhatsApp..." | "Bukan sekadar website. POS, ERP, aplikasi kasir, sampai integrasi printer dan gudang — dikerjakan satu orang, dari requirement sampai sistem benar-benar dipakai karyawan Anda." |
+| CTA utama | Konsultasi Gratis | **Ceritakan Masalah Anda** |
+| CTA kedua | Lihat Layanan | Lihat yang Bisa Saya Kerjakan |
+| Reassurance | Tanpa biaya konsultasi | Konsultasi pertama gratis |
+
+### Prinsip yang dipakai
+
+1. **Pakai kalimat yang boss-nya ucapkan.** "Order numpuk di WhatsApp, stok
+   tidak sinkron" adalah bahasa pemilik usaha, bukan bahasa konsultan IT.
+2. **Janji-janji tak bere,** gantikan klaim. "Saya yang bikin jalan, dari
+   server sampai printer" — spesifik dan bisa dibuktikan (CV: CUPS).
+3. **"Bukan sekadar website"** upfront. Ini memfilter yang cuma cari landing
+   page Murah, dan justrumemperbesar pool lead yang tepat.
+4. **"Dikerjakan satu orang"** — menyentuh ke keluhan klasik: vendor
+   yang biayanya tinggi lalu disappears setelah serah terima.
+5. **CTA lowered the ask.** "Ceritakan Masalah Anda" invites a conversation,
+   bukan membeli — jauh lebih rendah hambatannya dari "Konsultasi Gratis".
+
+### Trust bar diperkuat
+
+Semula angka teknis (6+ stack) — tidak terasa relevan bagi pemilik usaha.
+Diganti jadi yang menjawab keberatan:
+
+- **4+** — Sistem produksi berjalan hari ini
+- **100%** — Dikerjakan 1 orang, bukan dioper ke vendor lain
+- **1.000+** — Siswa & trainee yang saya latih
+
+### Metadata SEO diselaraskan
+
+Title → *"JohnDev — POS, ERP & Integrasi Printer untuk Bisnis Anda"*
+(konsisten dengan positioning hardware yang sekarang jadi angle utama).
+Description memakai pembuka yang sama dengan H1.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Render H1, subheadline, 2 CTA, trust bar, title → semua sesuai
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | H1 sekarang **dua kalimat** — pada 360px bisa wrap menjadi 4–5 baris. Perlu dicek visual di HP. |
+| 🟡 Sedang | Klaim "4+ sistem produksi sudah jalan" muncul di eyebrow; harus konsisten dengan `/layanan` di Step 2. |
+| 🟡 Sedang | Link `#layanan` masih 404 — tombol "Lihat yang Bisa Saya Kerjakan" sekarang menjanjikan sesuatu yang belum ada. |
+| 🟠 Info | Copy masih perlu review **bahasa** — John yang pakai, aku tidak tahu register yang paling pas untuk targetnya. |
