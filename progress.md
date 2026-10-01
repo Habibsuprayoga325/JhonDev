@@ -283,3 +283,76 @@ Description memakai pembuka yang sama dengan H1.
 | 🟡 Sedang | Klaim "4+ sistem produksi sudah jalan" muncul di eyebrow; harus konsisten dengan `/layanan` di Step 2. |
 | 🟡 Sedang | Link `#layanan` masih 404 — tombol "Lihat yang Bisa Saya Kerjakan" sekarang menjanjikan sesuatu yang belum ada. |
 | 🟠 Info | Copy masih perlu review **bahasa** — John yang pakai, aku tidak tahu register yang paling pas untuk targetnya. |
+
+---
+
+## 2026-10-01 — Step 1.3 (revisi 2): nada perusahaan, bukan one-man show
+
+### Masukan John (dua arah, keduanya valid)
+
+**Kritik 1 — nada "freelancer".** Kalimat *"Saya yang bikin jalan"* dan
+*"dikerjakan satu orang"* menurunkan kredibilitas sebagai entitas. Klien B2B
+ragu kalau tahu sistemnya di-handle satu orang — takut tidak ada support kalau
+sibuk atau sakit.
+
+**Kritik 2 — usulan dari agent lain terlalu kaku.** Opsi yang ditawarkan
+(*"dalam Satu Ekosistem Terpadu"*, *"infrastruktur sistem yang siap pakai"*)
+memakai bahasa korporat yang tidak dipakai pemilik usaha. Itu memang gaya
+Stripe/enterprise, tapi jaraknya terlalu jauh dari bahasa calon kalon John.
+
+### Solusi: tengah di antara keduanya
+
+Ambil **struktur argumentasi** dari versi enterprise (masalah → hasil), tapi
+ganti **kosa kata**-nya ke bahasa pemilik usaha. Dan ubah subjek dari
+**"saya" ke "kami"** — ini yang mengembalikan kredibilitas tanpa perlu
+menyebut jumlah orang.
+
+| | Revisi 1 (freelancer) | Revisi 2 (kini) |
+|---|---|---|
+| H1 | "Order numpuk di WhatsApp, stok tidak sinkron? **Saya** yang bikin jalan, dari server sampai printer." | "Berhenti mengelola bisnis di WhatsApp, buku, dan catatan. **Pindahkan ke satu sistem yang jalan otomatis.**" |
+| Subhead | "…dikerjakan **satu orang**, dari requirement…" | "**Kami** membangun aplikasi web & mobile, modul ERP, POS, hingga integrasi printer kasir dan gudang — semua **disesuaikan dengan alur kerja bisnis Anda**, bukan paket bawaan yang harus dibelajarkan ulang." |
+| CTA 1 | Ceritakan Masalah Anda | **Konsultasikan Kebutuhan Anda** |
+| CTA 2 | Lihat yang Bisa Saya Kerjakan | Lihat Layanan |
+| Eyebrow | …untuk klien kami | 4+ sistem produksi aktif untuk klien kami |
+
+### Trust bar
+
+Trust bar "100% dikerjakan 1 orang" **dihapus** — justru memperkuat kesan
+one-man show. Diganti dua angka lain yang tetap bisa diverifikasi dari CV:
+
+- **4+** Sistem produksi aktif hari ini
+- **6+** Teknologi: web, mobile, sampai hardware
+- **1.000+** Orang yang saya latih pakai teknologi ini
+
+### Prinsip
+
+1. **Subjek = "kami".** Klien membeli entitas, bukan individu. Menyebut
+   "saya" di headline+H1+trust bar menandai ini portofolio pribadi.
+2. **Kosa kata tetap konkret.** "Alur kerja", "printer kasir", "gudang" —
+   bukan "ekosistem", "infrastruktur", "solusi terpadu".
+3. **Pains tetap spesifik.** "WhatsApp, buku, dan catatan" — kalimat yang
+   benar-benar terasa oleh pemilik usaha, bukan abstrak.
+4. **"Bukan paket bawaan yang harus dibelajarkan ulang"** — keberatan
+   tersembunyi dari produk instan (SaaS/Accurate/Odoo) expressed dalam satu klausa.
+5. **CTA "Konsultasikan Kebutuhan Anda"** — cukup profesional untuk B2B,
+   tetap rendah hambatan.
+
+### Metadata SEO
+
+Title → *"JohnDev — Sistem Operasional Bisnis Otomatis"*;
+description memakai pembuka yang sama dengan H1.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Render H1, CTA, title → sesuai. Tidak ada lagi frasa "saya yang bikin"
+  maupun "satu orang" di halaman.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | Frasa "kami" dipakai tanpa menjelaskan siapa (perusahaan/sole proprietorship). Kalau ingin, tambahkan "CV JohnDev Technology Solution" di footer atau section Kontak agar entitasnya terasa resmi. |
+| 🟡 Sedang | Trust bar "6+ Teknologi: web, mobile, sampai hardware" sengaja dikembalikan (revisi 1 menggantinya dengan 'dikerjakan satu orang'). |
+| 🟡 Sedang | `#layanan` masih 404 — tombol "Lihat Layanan" masih promising sesuatu yang belum ada. |
+| 🟠 Info | Ketiga revisi ini masih **berhypothese**. Copy final sebaiknya diuji ke 2–3 prospek nyata (kirim link, lihat mana yang bikin mereka chat). Data >CCPREFER. |

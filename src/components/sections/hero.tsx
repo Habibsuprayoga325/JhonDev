@@ -8,9 +8,9 @@ import { CTA_MESSAGE_DEFAULT, whatsappLink } from "@/lib/site-config";
  * Jangan tambah angka baru tanpa bukti yang bisa ditunjukkan ke calon klien.
  */
 const trustPoints = [
-  { value: "4+", label: "Sistem produksi berjalan hari ini" },
-  { value: "100%", label: "Dikerjakan 1 orang, bukan dioper ke vendor lain" },
-  { value: "1.000+", label: "Siswa & trainee yang saya latih" },
+  { value: "4+", label: "Sistem produksi aktif hari ini" },
+  { value: "6+", label: "Teknologi: web, mobile, sampai hardware" },
+  { value: "1.000+", label: "Orang yang saya latih pakai teknologi ini" },
 ] as const;
 
 export function Hero() {
@@ -26,21 +26,20 @@ export function Hero() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-brand-light px-3.5 py-1.5 text-xs font-medium text-brand-primary">
             <span className="size-1.5 rounded-full bg-brand-primary" />
-            4+ sistem produksi sudah jalan untuk klien kami
+            4+ sistem produksi aktif untuk klien kami
           </p>
 
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
-            Order numpuk di WhatsApp, stok tidak sinkron?
-            <br className="hidden sm:block" />{" "}
-            <span className="text-brand-primary">
-              Saya yang bikin jalan, dari server sampai printer.
+          <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl">
+            Berhenti mengelola bisnis di WhatsApp, buku, dan catatan.
+            <span className="mt-2 block text-brand-primary">
+              Pindahkan ke satu sistem yang jalan otomatis.
             </span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-pretty text-muted-foreground">
-            Bukan sekadar website. POS, ERP, aplikasi kasir, sampai integrasi
-            printer dan gudang — dikerjakan satu orang, dari requirement sampai
-            sistem benar-benar dipakai karyawan Anda.
+            Kami membangun aplikasi web &amp; mobile, modul ERP, POS, hingga
+            integrasi printer kasir dan gudang — semua disesuaikan dengan alur
+            kerja bisnis Anda, bukan paket bawaan yang harus dibelajarkan ulang.
           </p>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -53,7 +52,7 @@ export function Hero() {
                 "h-12 w-full px-8 text-base sm:w-auto",
               )}
             >
-              Ceritakan Masalah Anda
+              Konsultasikan Kebutuhan Anda
             </a>
             <a
               href="#layanan"
@@ -62,7 +61,7 @@ export function Hero() {
                 "h-12 w-full px-8 text-base sm:w-auto",
               )}
             >
-              Lihat yang Bisa Saya Kerjakan
+              Lihat Layanan
             </a>
           </div>
 

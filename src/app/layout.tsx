@@ -19,11 +19,11 @@ const jakartaMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://johntech.web.id"),
   title: {
-    default: "JohnDev — POS, ERP & Integrasi Printer untuk Bisnis Anda",
+    default: "JohnDev — Sistem Operasional Bisnis Otomatis",
     template: "%s | JohnDev",
   },
   description:
-    "Order numpuk, stok tidak sinkron? JohnDev membangun POS, ERP, aplikasi kasir, dan integrasi printer untuk bisnis Anda — dari requirement sampai sistem dipakai karyawan. 4+ sistem produksi berjalan.",
+    "Berhenti mengelola bisnis di WhatsApp dan catatan. JohnDev membangun aplikasi web & mobile, ERP, POS, dan integrasi printer kasir yang disesuaikan dengan alur kerja bisnis Anda.",
   keywords: [
     "developer Indonesia",
     "software house Indonesia",
