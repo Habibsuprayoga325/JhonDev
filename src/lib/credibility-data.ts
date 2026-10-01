@@ -203,4 +203,16 @@ export const clientLogos: readonly ClientLogo[] = [
     width: 96,
     height: 96,
   },
+  {
+    src: "/clients/client-1.png",
+    alt: "Logo aplikasi kasir dan pemesanan katering",
+    width: 91,
+    height: 96,
+  },
+  {
+    src: "/clients/client-2.png",
+    alt: "Logo perusahaan klien — sistem operasional",
+    width: 220,
+    height: 45,
+  },
 ] as const;

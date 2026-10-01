@@ -143,14 +143,6 @@ export function WhyJohnDevSection() {
         <WhyBlock />
 
         <div className="mt-20">
-          <h3 className="text-center text-2xl font-bold tracking-tight text-foreground">
-            Sistem yang sudah berjalan
-          </h3>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-            Empat sistem yang sudah berjalan di produksi — untuk web, mobile,
-            sampai integrasi hardware.
-          </p>
-
           {/* Logo klien: bukti sosial tanpa menampilkan nama atau link. */}
           {clientLogos.length > 0 && (
             <div className="mt-12">

@@ -629,3 +629,52 @@ berhenti di tengah.
 | 🟡 Sedang | Klaim "Logo klien yang menyetujui ditampilkan" **belum tentu benar** — kalimat itu sudah ditulis, tapi izinnya belum dikonfirmasi. Jangan dibiarkan berdiri kalau ternyata belum ada izin. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
 | 🟠 Info | `@keyframes marquee` dan `.animate-marquee` ada di `globals.css` di luar `@layer utilities` — tidak ter-override Tailwind karena specificity-nya unik. |
+
+---
+
+## 2026-10-01 — Marquee polish: opasitas, heading dihapus, 2 logo baru
+
+### Perubahan
+
+1. **Opasitas logo 0.70 → 0.95.** John: logo "kurang jelas terlalu transparan".
+   Border tipis (seperti logo printSmart) hilang di opasitas rendah.
+2. **Heading "Sistem yang sudah berjalan" + subjudulnya dihapus.** John:
+   "tidak usah ada". Marquee dan kartu studi kasus tetap.
+3. **2 logo baru ditambahkan** (`client-1.png` 91x96, `client-2.png` 220x45),
+   diproses dengan pipeline yang sama (transparent background, dual size cap).
+   Alt text deskriptif, bukan "Logo klien" — teks generik tidak berguna
+   untuk pembaca screen reader.
+
+### ⚠️ Catatan hukum: lambang negara di logo ke-3
+
+Logo **PAN PILKADES (`e-voting.png`) memuat LAMBANG NEGARA Indonesia** — Garuda
+Pancasila dengan tulisan "REPUBLIK INDONESIA". Penggunaan lambang negara
+diatur **UU No. 28 Tahun 2014 tentang Lambang Negara**, yang melarang pemakaian
+untuk kepentingan komersial oleh pihak/swasta, dengan sanksi pidana.
+
+**Keputusan John (2026-10-01): ditampilkan, dengan risiko ditanggung John.**
+Logo tetap dirender. Catatan ini disimpan supaya keputusan punya jejak:
+kalau nanti ada komplain atau masalah legal, yang perlu diubah hanya menghapus
+satu entri dari `clientLogos`.
+
+Levelled risk:
+- Dasar hukum: UU No. 28 Tahun 2014 tentang Lambang Negara
+- Yang dilakukan: John sudah diberi tahu risikonya dan memutuskan untuk ditampilkan. Keputusan ini dicatat di sini.
+- Yang BELUM dilakukan: verifikasi apakah pihak yang berhak protes punya
+  standing, atau apakah penggunaan ini termasuk pengecualian.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 warning
+- Render: **5 logo** terreferensikan, `opacity-95` ada, heading "Sistem yang
+  sudah berjalan" → **0 kemunculan**, `client-1` & `client-2` HTTP 200.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🔴 Tinggi | **Lambang negara (UU 28/2014).** Sudah diputuskan John untuk ditampilkan, tapi ini exposure yang nyata dan berulang tiap kali logo tampil. Pertimbangkan: ganti dengan logo desa yang tidak memakai lambang negara, atau tampilkan hanya saat konsultasi 1-on-1. |
+| 🟡 Sedang | **2 logo baru belum diidentifikasi.** John: "langsung pasang saja tidak apa-apa". Alt text dibuat generik karena isi logonya belum dipastikan. Kalau ternyata salah, cukup ganti. |
+| 🟡 Sedang | **Izin logo belum dikonfirmasi** untuk 5 logo. |
+| 🟡 Sedang | Logo **Garuda (merah-putih) kontras rendah** di atas kartu putih. Kalau kurang terbaca, butuh treatment khusus (border/background). |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
