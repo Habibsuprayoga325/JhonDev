@@ -405,3 +405,78 @@ client component; catatannya sudah ditulis di docblock `services-section.tsx`.
 | 🟡 Sedang | Tombol "Tanya" di setiap kartu menambah **9 link WA di halaman**. Kalau terasaighbourhoodspam, pertimbangkan tombol tunggal di akhir grid (Step 2.4). |
 | 🟠 Info | `featured` di-index (`index === 1 `||``||` index === 5`) adalah placeholder — logikanya arbitrer, ganti kalau John punya layanan yang mau ditonjolkan. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+
+---
+
+## 2026-10-01 — Penurunan Harga + Step 3: WhyJohnDev
+
+### Penurunan harga (−10%)
+
+John: harga terasa overprice. Diturunkan −10% lalu **dibulatkan** ke angka
+yang enak dibaca (tidak ada "Rp 2,7 juta" di kartu):
+
+| Layanan | Lama | Baru | Deviasi |
+|---|---|---|---|
+| Company Profile | 3 jt | **2,5 jt** | −16,7% |
+| Integrasi Sistem | 7 jt | **6,5 jt** | −7,1% |
+| POS | 8 jt | **7,5 jt** | −6,2% |
+| IoT | 10 jt | **9 jt** | −10% |
+| CRM | 10 jt | **9 jt** | −10% |
+| Mobile | 12 jt | **11 jt** | −8,3% |
+| SaaS | 20 jt | **18 jt** | −10% |
+| ERP | 25 jt | **22,5 jt** | −10% |
+
+Deviasi tidak rata karena dibulatkan ke angka psychologically-bulat.
+Tiga di antaranya turun lebih dari 10% (−6,2% – −8,3% masih dalam toleransi
+perlu disetujui John.
+perlu perlu disetujui John.
+
+### Step 3 — WhyJohnDev
+
+1. **`src/lib/credibility-data.ts`** — 4 pain point (masalah → solusi), 4 studi
+   kasus dari CV, plus `credibilityStats`.
+2. **`src/components/sections/why-jhondev-section.tsx`** — blok 4 pain point,
+   grid 3 kartu studi kasus, dan CTA penutup di panel biru.
+3. **`page.tsx`** — section dipasang setelah Layanan.
+
+Struktur copy sengaja: **masalah → hasil**, bukan daftar`** lalu"Kami systématiquementbau Klaim tanpa bukti. Setiap kartu studi kasus memuat Masalah, Hasil, dan Teknologi — supaya yang bisa diuji calon klien (bukan jargon, bukan pujian generik).
+Struktur copy sengaja: **masalah → hasil**, bukan daftar klaim tanpa bukti.
+### Temuan: satu domain klien mati
+
+Semua URL studi kasus diuji dengan `curl` sebelum ditampilkan:
+
+| Domain | Status |
+|---|---|
+| printsmart.my.id | ✅ 200 |
+| ata.typeapproval.co.id | ✅ 200 |
+| pilkasetda.my.id | ✅ 200 |
+| **ppdbamanahbangsa.web.id** | ❌ **tidak merespons** |
+
+**Tindakan:** study PPDB di-set `published: false` + `hiddenReason` terisi.
+Tiga studi kasus yang hidup tetap tampil. Alasan disembunyikannya **tercatat
+di kode** supaya bisa ditinjau ulang, bukan hilang diam-diam.
+
+### Mekanisme permission (R1 di PRD)
+
+Tiap studi kasus punya flag `published`. Komponen hanya me-render yang `true`.
+Menampilkan nama klien tanpa izin = risiko hukum/reputasi, jadi ini di mechanic
+rather than bergantung padaingingatan.
+digunakan di kode, bukan bergantung pada ingatan.
+Ditambahkan field `hiddenReason?: string` supaya keputusan tidak ditampilkan
+selalu punya jejak alasan.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Render: `id="why-jhondev"` ada, 4 pain point, **3 studi kasus tampil**,
+  PPDB tidak muncul, harga baru terpakai, 8+3=11 `<article>`.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 **Tinggi** | **Harga masih placeholder.** Menurunkan 10% dari angka yang sendirinya belum tervalidasi tidak menjadikannya benar. Kalau biaya riil POS adalah 15 juta, tawaran 7,5 juta = kerugian. Perlu konfirmasi John. |
+| 🟡 Sedang | **Izin tampilkan nama klien belum dikonfirmasi.** `published: true` saat ini berdasarkan asumsi John adalah pemilik atau pihak yang merekrutnya. Kalau belum pernah ditanyakan, samarkan nama kliennya. |
+| 🟡 Sedang | Domain PPDB mati — kalau tidak sengaja, perbaiki; kalau tidak bisa dipulihkan, ganti domain atau hapus studi kasus ini. |
+| 🟡 Sedang | Copy 4 pain point + 3 studi kasus belum diuji ke calon klien. |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
