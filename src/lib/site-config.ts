@@ -17,7 +17,7 @@ export const siteConfig = {
     whatsapp: "6287846073782",
     /** Format tampilan ke pengguna. */
     whatsappDisplay: "+62 878-4607-3782",
-    email: "habibsuprayoga3@gmail.com",
+    email: "johndev912@gmail.com",
     location: "Cikarang, Kabupaten Bekasi, Jawa Barat",
   },
 

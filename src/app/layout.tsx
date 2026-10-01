@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "integrasi hardware",
     "IoT Indonesia",
   ],
-  authors: [{ name: "John — JohnDev" }],
+  authors: [{ name: "John — JohnDev", url: "https://johntech.web.id" }],
   creator: "JohnDev",
   openGraph: {
     type: "website",

@@ -829,3 +829,73 @@ lain harus ikut — dicek manual di langkah ini.
 | 🟡 Sedang | Badge **"Paling sering dipilih"** pada Sistem Operasional — asumsi Hermes, bukan data. Kalau belum ada riwayat transaksi, klaim ini bisa diganti jadi "Paling banyak diminati". |
 | 🟡 Sedang | "Semua harga adalah estimasi awal… harga final tidak berubah di tengah jalan" — **komitmen kontrak**. Pastikan John agree sebelum launch. |
 | 🟠 Info | `#kontak`, `/privacy`, `/terms` masih 404. |
+
+---
+
+## 2026-10-01 — Step 4.4–4.7: Kontak (WhatsApp-first) + ganti email
+
+### Keputusan John
+
+- **WhatsApp dulu** untuk_contact form. Opsi email tetap terbuka untuk nanti.
+- Email kontak diganti dari `habibsuprayoga3@gmail.com` →
+  **`johndev912@gmail.com`**.
+
+### Kenapa WhatsApp-first, dan kenapa ini bukan kegagalan
+
+PRD §9 menandai Step 4.4–4.7 sebagai "⚠️ Tinggi" karena form server
+berarti Server Action + Zod + rate limit + honeypot. **Keputusan John membuat
+langkah itu tidak perlu ada sama sekali di Phase 1:**
+
+1. **Hosting belum ditentukan.** Form butuh runtime server; deploy ke provider
+   pilihan John bisa bermasalah dan belum ada yang dites.
+2. **Audiens UMKM lebih familiar dengan WhatsApp** daripada form web.
+3. **⚠️ Zero attack surface.** Tidak ada endpoint, tidak ada input yang
+   sampai ke server, jadi tidak ada yang bisa diserang. Rate limit, honeypot,
+   dan Zod **tidak relevan** — tidak ada yang perlu dirate-limit.
+
+Jadi PR ini **tidak mengimplementasikan** Server Action/Zod/rate limit/honeypot
+sama sekali. Yang ada hanya validasi client-side (`maxLength=600`) untuk UX,
+yang memang bukan kontrol keamanan.
+
+### Yang dibuat
+
+`src/components/sections/contact-section.tsx` — **satu-satunya client
+component di homepage** (karena punya state form):
+- Dropdown **Topik** (8 opsi — cerminan 8 kategori layanan, plus "Custom Solution")
+- Textarea **Kebutuhan** (opsional, max 600 karakter, dengan counter)
+- Tombol **Kirim lewat WhatsApp** → `wa.me` dengan pesan terisi otomatis:
+  topik + kebutuhan yang diketik user
+- Link telepon & email sebagai alternatif
+
+Section juga menampilkan privacy notice: *"Data Anda tidak disimpan di website
+ini. Isi form hanya disusun di perangkat Anda, lalu dikirim langsung ke
+WhatsApp — tidak melewati server kami."* — ini **benar secara teknis** untuk
+arsitektur saat ini.
+
+### Perubahan email
+
+- `src/lib/site-config.ts`: `contact.email` → `johndev912@gmail.com`
+- `src/app/layout.tsx`: `authors` dapat `url: "https://johntech.web.id"`
+
+### ⚠️ Email lama masih ada di git history
+
+`habibsuprayoga3@gmail.com` masih bisa dibaca di commit lama
+(`0062e7c` → `adc229e`). Menghapusnya berarti `git filter-repo` + force-push,
+yang **menulis ulang seluruh riwayat** dan berisiko merusak fork/clone lokal.
+
+**Rekomendasi: biarkan.** Email itu publik — CV-nya sudah online di LinkedIn.
+Kalau memang ingin hilang, perlu keputusan eksplisit, bukan asumsi.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Render: `id="kontak"`, placeholder Step 4.1 → **0** (sudah dihapus),
+  `johndev912@gmail.com` ada, `habibsuprayoga3` → **0**, privacy notice ada.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Tidak ada form yang menyimpan lead.** Semua lead masuk lewat WhatsApp pribadi — tidak ada daftar, tidak bisa diukur funnel, tidak bisa dilacak konversinya. Ini **konsekuensi langsung** dari keputusan WhatsApp-first, bukan bug. Kalau nanti butuh data, barulah Email/DB masuk. |
+| 🟡 Sedang | `/privacy` dan `/terms` masih **404**, padahal footer menautkannya. Sekarang section kontak sudahолот privacy notice yang benar, jadi halaman legal jadi makin penting. |
+| 🟠 Info | Link `tel:` dan `mailto:` di section kontak — `mailto:` membuka mail client dengan email **baru**. Sudah dicek render. |
