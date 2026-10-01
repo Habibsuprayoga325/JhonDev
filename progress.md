@@ -63,7 +63,7 @@ Status: **Phase 0 selesai** — fondasi project siap. Next: Step 0.5 (Step 1.x l
 
 | K | Nilai |
 |---|---|
-| Domain | `johntech.web.id` (dari John) |
+| Domain | `Johntech.web.id` (dari John) |
 | WhatsApp | `+62 878-4607-3782` → `wa.me/628784607382` |
 
 ### Yang dikerjakan
@@ -356,3 +356,52 @@ description memakai pembuka yang sama dengan H1.
 | 🟡 Sedang | Trust bar "6+ Teknologi: web, mobile, sampai hardware" sengaja dikembalikan (revisi 1 menggantinya dengan 'dikerjakan satu orang'). |
 | 🟡 Sedang | `#layanan` masih 404 — tombol "Lihat Layanan" masih promising sesuatu yang belum ada. |
 | 🟠 Info | Ketiga revisi ini masih **berhypothese**. Copy final sebaiknya diuji ke 2–3 prospek nyata (kirim link, lihat mana yang bikin mereka chat). Data >CCPREFER. |
+
+---
+
+## 2026-10-01 — Step 2.1 + 2.2: Katalog Layanan
+
+### Yang dikerjakan
+
+1. **`src/lib/services-data.ts`** — 8 kategori layanan sebagai typed data
+   (`ServiceCategory`). Sumber tunggal; menambah layanan = menambah satu objek.
+2. **`src/components/services/service-glyph.tsx`** — pemetaan `ServiceIcon`
+   → komponen lucide-react, dengan fallback `Globe` untuk key tak dikenal.
+3. **`src/components/services/service-card.tsx`** — kartu: ikon, badge kategori,
+   judul, deskripsi, 3 contoh konkret, harga "mulai dari", dan tombol "Tanya"
+   yang membuka WA dengan pesan spesifik per layanan.
+4. **`src/components/sections/services-section.tsx`** — grid 1/2/3 kolom,
+   `id="layanan"` (menutup link yang tadinya 404), `scroll-mt-16` agar tidak
+   ketutup header sticky.
+5. **`src/app/page.tsx`** — `<ServicesSection />` dipasang.
+
+### Keputusan: harga "mulai dari", bukan angka pasti
+
+Harga custom bergantung pada scope. Angka kaku di website cepat basi dan
+berisiko salah janji. Semua kartu memakai "Mulai dari Rp X juta" + disclaimer
+di bawah grid: *"Harga bersifat estimasi awal dan bergantung pada scope."*
+
+Angka-angka ini **placeholder yang perlu dikonfirmasi John** sebelum launch —
+belum divalidasi terhadap biaya riil.
+
+### Keputusan: server component, tanpa filter
+
+Section ini **tidak punya state**, jadi tidak perlu `"use client"` — nol JS
+terunduh untuk bagian yang paling besar. Filter kategori baru butuh
+client component; catatannya sudah ditulis di docblock `services-section.tsx`.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Render: `id="layanan"` ada, **8 `<article>`**, 8 judul unik, ikon ter-render,
+  link WA per kartu memakai pesan spesifik ("saya tertarik dengan layanan ...").
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 **Tinggi** | **Harga placeholder.** Semua angka `Rp X juta` adalah tebakan awal, belum divalidasi terhadap biaya riil John. Salah harga = kredibilitas rusak + janji meleset. Perlu dikonfirmasi sebelum launch. |
+| 🟡 Sedang | Copy 8 layanan belum ditinjau John — ini marketing copy yang belum diuji ke pasar. |
+| 🟡 Sedang | Tombol "Tanya" di setiap kartu menambah **9 link WA di halaman**. Kalau terasaighbourhoodspam, pertimbangkan tombol tunggal di akhir grid (Step 2.4). |
+| 🟠 Info | `featured` di-index (`index === 1 `||``||` index === 5`) adalah placeholder — logikanya arbitrer, ganti kalau John punya layanan yang mau ditonjolkan. |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
