@@ -216,3 +216,46 @@ export const clientLogos: readonly ClientLogo[] = [
     height: 45,
   },
 ] as const;
+
+/**
+ * Alur kerja JohnDev — 4 langkah.
+ *
+ * Ditambahkan atas permintaan John (2026-10-01) untuk memberi bobot pada section
+ * WhyJohnDev setelah kartu studi kasus dihapus.
+ *
+ * Sengaja memakai kata kerja yang bisa diverifikasi — bukan jargon seperti
+ * approval, serah terima) — bukan jargon seperti "agile" atau "lean".
+ */
+export type WorkStep = {
+  /** Nomor langkah, untuk ditampilkan di badge. */
+  step: string;
+  title: string;
+  description: string;
+};
+
+export const workSteps: readonly WorkStep[] = [
+  {
+    step: "01",
+    title: "Wawancara & Pemetaan",
+    description:
+      "Kami datang ke lokasi atau rapat online, lalu memetakan alur kerja yang benar-benar Anda jalankan — bukan versi idealnya.",
+  },
+  {
+    step: "02",
+    title: "Desain & Estimasi",
+    description:
+      "Anda dapat rincian fitur dan pecahan biaya sebelum ada kode yang ditulis. Revisi tahap ini tidak menambah biaya.",
+  },
+  {
+    step: "03",
+    title: "Pengerjaan & Demo Berkala",
+    description:
+      "Sistem dikerjakan bertahap, dan Anda bisa mencoba hasilnya setiap tahap — bukan menunggu sampai akhir.",
+  },
+  {
+    step: "04",
+    title: "Serah Terima & Pelatihan Tim",
+    description:
+      "Kami melatih tim Anda sampai nyaman, lalu sistem ditinggalkan dengan dokumentasi. Anda tidak bergantung pada kami selamanya.",
+  },
+] as const;

@@ -439,7 +439,7 @@ perlu perlu disetujui John.
    grid 3 kartu studi kasus, dan CTA penutup di panel biru.
 3. **`page.tsx`** — section dipasang setelah Layanan.
 
-Struktur copy sengaja: **masalah → hasil**, bukan daftar`** lalu"Kami systématiquementbau Klaim tanpa bukti. Setiap kartu studi kasus memuat Masalah, Hasil, dan Teknologi — supaya yang bisa diuji calon klien (bukan jargon, bukan pujian generik).
+Struktur copy sengaja: **masalah → hasil**, bukan daftar klaim tanpa bukti. Setiap kartu studi kasus memuat Masalah, Hasil, dan Teknologi — supaya yang bisa diuji calon klien (bukan jargon, bukan pujian generik).
 Struktur copy sengaja: **masalah → hasil**, bukan daftar klaim tanpa bukti.
 ### Temuan: satu domain klien mati
 
@@ -757,3 +757,75 @@ risiko sendiri".
 | 🟡 Sedang | Kalimat *"Logo klien yang menyetujui ditampilkan"* masih berdiri. Izin untuk 5 logo belum dikonfirmasi. |
 | 🟠 Info | Lambang negara: legal untuk_logo kepanitiaan resmi. Kalau nanti logo Garuda dipakai untuk konteks yang berbeda, tinjau ulang. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+
+---
+
+## 2026-10-01 — Izin logo dikonfirmasi + Blok "Cara Kami Bekerja" + Step 4.1–4.3
+
+### 1. Izin logo — DICONFIRMASI
+
+John mengizinkan penggunaan logo di website (2026-10-01). Kalimat
+*"Logo klien yang menyetujui ditampilkan sebagai bukti portofolio"* sekarang
+sesuai kenyataan. Risiko izin **tutup**.
+
+### 2. Blok "Bagaimana Kami Bekerja"
+
+Section WhyJohnDev terasa tipis setelah kartu studi kasus dihapus. Ditambah
+4 langkah kerja (`workSteps` di `credibility-data.ts`):
+
+| | Langkah |
+|---|---|
+| 01 | Wawancara & Pemetaan |
+| 02 | Desain & Estimasi |
+| 03 | Pengerjaan & Demo Berkala |
+| 04 | Serah Terima & Pelatihan Tim |
+
+Kata kerjanya sengaja dipilih yang **bisa diverifikasi** (wawancara,
+approval, pelatihan, serah terima) — bukan jargon seperti "agile", "lean",
+atau "best practice". Jargon itu tidak bergerak bagi calon klien;
+"revisi tahap ini tidak menambah biaya" dan
+"Anda tidak bergantung pada kami selamanya" — itu yang bergerak.
+
+Render memakai `<ol>` + `<li>` (bukan `<div>`), jadi bermakna secara semantik
+untuk pembaca screen reader.
+
+### 3. Step 4.1–4.3 — Pricing
+
+**`src/lib/pricing-data.ts`** — 4 paket:
+
+| Paket | Mulai dari | Untuk siapa |
+|---|---|---|
+| Company Profile | Rp 2,5 jt | Butuh kehadiran digital, belum butuh sistem |
+| **Sistem Operasional** ★ | Rp 9 jt | Operasional masih manual atau kacau |
+| Aplikasi Mobile | Rp 11 jt | Tim lapangan/pelanggan butuh HP |
+| Sistem Kustom | Rp 22,5 jt | Operasional besar + integrasi hardware |
+
+**Keputusan produk: setiap paket punya `excludes` yang DITAMPILKAN.**
+Bagian "Tidak termasuk" terlihat di semua 4 kartu. Alasannya: mencegah
+ekspektasi salah, dan justru membangun kepercayaan — klien lebih mudah
+bertanya kalau batasannya jelas.
+
+**`pricing-section.tsx`** — grid 4 kolom, `id="harga"` (menutup link navbar
+yang tadinya 404), `scroll-mt-16`, paket "Sistem Operasional" ditandai
+`popular` dengan border biru + badge "Paling sering dipilih".
+
+**Konsistensi harga diverifikasi otomatis:** 4 angka di `pricing-data.ts`
+semua ada di `services-data.ts`. Kalau harga berubah di satu file, yang
+lain harus ikut — dicek manual di langkah ini.
+
+### Verifikasi
+
+- `npm run build` → ✅ (1 SyntaxError karena kutip hilang saat edit baris,
+  sudah diperbaiki) · `npm run lint` → ✅ 0 masalah
+- Render: `id="harga"`, 4 paket, 4 harga, badge popular, 4 blok "Tidak
+  termasuk", blok "Bagaimana kami bekerja" + 4 langkah, `href="#harga"` ada.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Harga masih placeholder.** Sudah disepakati (2026-10-01) untuk dipakai apa adanya, tapi belum divalidasi terhadap biaya riil. Kalau POSIX ternyata lebih murah, margin tergerus; kalau lebih mahal, tawaran merugi. |
+| 🟡 Sedang | **"Pembayaran dapat dicicil"** — diklaim di disclaimer tanpa pernah dikonfirmasi John. Hapus kalau tidak mau dibagiratakan. |
+| 🟡 Sedang | Badge **"Paling sering dipilih"** pada Sistem Operasional — asumsi Hermes, bukan data. Kalau belum ada riwayat transaksi, klaim ini bisa diganti jadi "Paling banyak diminati". |
+| 🟡 Sedang | "Semua harga adalah estimasi awal… harga final tidak berubah di tengah jalan" — **komitmen kontrak**. Pastikan John agree sebelum launch. |
+| 🟠 Info | `#kontak`, `/privacy`, `/terms` masih 404. |

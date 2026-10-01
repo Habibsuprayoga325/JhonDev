@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LogoMarquee } from "@/components/credibility/logo-marquee";
-import { clientLogos, painPoints } from "@/lib/credibility-data";
+import { clientLogos, painPoints, workSteps } from "@/lib/credibility-data";
 import { CTA_MESSAGE_DEFAULT, whatsappLink } from "@/lib/site-config";
 
 /** Header section WhyJohnDev — 4 masalah → bagaimana kami menyelesaikannya. */
@@ -92,6 +92,35 @@ export function WhyJohnDevSection() {
             </div>
           )}
 
+        </div>
+
+        {/* Alur kerja — memberi konteks "bagaimana kerja sama ini jalan". */}
+        <div className="mt-20">
+          <h3 className="text-center text-2xl font-bold tracking-tight text-foreground">
+            Bagaimana kami bekerja
+          </h3>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
+            Empat tahap, dan Anda tahu persis di mana posisi kita sekarang.
+          </p>
+
+          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {workSteps.map((item) => (
+              <li key={item.step} className="relative">
+                <span
+                  aria-hidden="true"
+                  className="grid size-10 place-items-center rounded-full bg-brand-light text-sm font-bold text-brand-primary"
+                >
+                  {item.step}
+                </span>
+                <h4 className="mt-4 text-base font-semibold text-foreground">
+                  {item.title}
+                </h4>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {item.description}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
 
         <div className="mt-14 rounded-xl border border-brand-border bg-brand-light p-8 text-center">
