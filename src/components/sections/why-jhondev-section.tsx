@@ -1,13 +1,9 @@
-import { ArrowRight, CheckCircle2, Smartphone } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LogoMarquee } from "@/components/credibility/logo-marquee";
-import {
-  clientLogos,
-  painPoints,
-  publishedCaseStudies,
-} from "@/lib/credibility-data";
+import { clientLogos, painPoints } from "@/lib/credibility-data";
 import { CTA_MESSAGE_DEFAULT, whatsappLink } from "@/lib/site-config";
 
 /** Header section WhyJohnDev — 4 masalah → bagaimana kami menyelesaikannya. */
@@ -50,73 +46,16 @@ function WhyBlock() {
   );
 }
 
-/** Kartu satu studi kasus — bukti, bukan pujian. */
-function CaseCard({
-  study,
-}: {
-  study: (typeof publishedCaseStudies)[number];
-}) {
-  return (
-    <article className="flex flex-col rounded-xl border border-border bg-card p-6">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-base font-semibold text-foreground">
-              {study.client}
-            </h3>
-            {study.kind === "mobile" && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
-                <Smartphone aria-hidden="true" className="size-3" />
-                Android
-              </span>
-            )}
-          </div>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            {study.period}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-5 space-y-4 text-sm">
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Masalah
-          </h4>
-          <p className="mt-1.5 leading-relaxed text-muted-foreground">
-            {study.challenge}
-          </p>
-        </div>
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Hasil
-          </h4>
-          <p className="mt-1.5 leading-relaxed text-foreground">
-            {study.outcome}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-border pt-4">
-        <p className="text-xs leading-relaxed text-muted-foreground">
-          <span className="font-medium text-foreground">Teknologi:</span>{" "}
-          {study.techHighlight}
-        </p>
-        {study.proofNote && (
-          <p className="mt-2.5 rounded-lg bg-secondary px-3 py-2 text-xs leading-relaxed text-secondary-foreground">
-            {study.proofNote}
-          </p>
-        )}
-      </div>
-    </article>
-  );
-}
-
 /**
  * Section WhyJohnDev — kredibilitas berbasis bukti (PRD §3.1–3.4).
  *
- * Hanya menampilkan studi kasus yang `published: true`.
- * Kalau John belum punya izin dari salah satu klien, ubah flag di
- * `credibility-data.ts` — komponen ini otomatis menyembunyikannya.
+ * Bukti sosial di sini adalah logo marquee, bukan kartu studi kasus.
+ * Kartu-kartu yang pernah ada dihapus atas permintaan John (2026-10-01):
+ * detail masalah/hasil tiap sistem dianggap terlalu banyak dan justru
+ * membuka informasi yang tidak perlu dipublikasikan.
+ *
+ * Data studi kasus tetap disimpan di `credibility-data.ts` — belum dihapus,
+ * supaya bisa dipakai lagi di percakapan 1-on-1 atau materi penjualan.
  */
 export function WhyJohnDevSection() {
   return (
@@ -153,11 +92,6 @@ export function WhyJohnDevSection() {
             </div>
           )}
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {publishedCaseStudies.map((study) => (
-              <CaseCard key={study.id} study={study} />
-            ))}
-          </div>
         </div>
 
         <div className="mt-14 rounded-xl border border-brand-border bg-brand-light p-8 text-center">

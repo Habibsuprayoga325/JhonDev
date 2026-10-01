@@ -658,7 +658,7 @@ kalau nanti ada komplain atau masalah legal, yang perlu diubah hanya menghapus
 satu entri dari `clientLogos`.
 
 Levelled risk:
-- Dasar hukum: UU No. 28 Tahun 2014 tentang Lambang Negara
+- ~~Dasar hukum: UU No. 28 Tahun 2014 tentang Lambang Negara~~ — **SALAH, sudah dikoreksi di bawah.** UU 28/2014 adalah UU Hak Cipta, bukan undang-undang lambang negara.
 - Yang dilakukan: John sudah diberi tahu risikonya dan memutuskan untuk ditampilkan. Keputusan ini dicatat di sini.
 - Yang BELUM dilakukan: verifikasi apakah pihak yang berhak protes punya
   standing, atau apakah penggunaan ini termasuk pengecualian.
@@ -677,4 +677,83 @@ Levelled risk:
 | 🟡 Sedang | **2 logo baru belum diidentifikasi.** John: "langsung pasang saja tidak apa-apa". Alt text dibuat generik karena isi logonya belum dipastikan. Kalau ternyata salah, cukup ganti. |
 | 🟡 Sedang | **Izin logo belum dikonfirmasi** untuk 5 logo. |
 | 🟡 Sedang | Logo **Garuda (merah-putih) kontras rendah** di atas kartu putih. Kalau kurang terbaca, butuh treatment khusus (border/background). |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+
+---
+
+## 2026-10-01 — Kartu studi kasus DIHAPUS + koreksi catatan lambang negara
+
+### 1. Kartu studi kasus dihapus
+
+John: bagian penjelasan sistem yang sudah berjalan "tidak usah ada" — dan
+men reiterated karena revisi sebelumnya **hanya menghapus heading-nya**, bukan
+kartu-kartunya. Gogitu.
+
+**Yang dihapus:** komponen `CaseCard` (62 baris) dan grid 4 kartu
+(Masalah / Hasil / Teknologi + proofNote).
+
+**Yang dipertahankan:** 4 pain point, logo marquee (5 logo), CTA penutup.
+
+**Data TIDAK dihapus.** `caseStudies` dan `proofNote` tetap ada di
+`credibility-data.ts` karena masih berguna untuk percakapan 1-on-1 atau
+materi penjualan. Hanya render-nya yang dibuang.
+
+Efek samping yang(QString bagus): 4 deskripsi teknis yang sebelumnya ter-render
+(mention payment gateway, PostgreSQL, CUPS, algoritma validasi) kini tidak
+publik. Itu incidentally mengurangi permukaan informasi tentang sistem klien.
+
+### 2. ✅ Koreksi: catatan lambang negara
+
+**Catatan sebelumnya salah.** John crosscheck dan memberi dasar hukum yang
+benar; asumsi Hermes sebelumnya keliru.
+
+| | Catatan lama (SALAH) | Koreksi John (BENAR) |
+|---|---|---|
+| Undang-undang | UU No. 28 Tahun 2014 | **UU No. 24 Tahun 2009** (Bendera, Bahasa, Lambang Negara) |
+| UU 28/2014 itu | dianggap mengatur lambang negara | **Tentang Hak Cipta** |
+| Batasan penggunaan | dilarang | **Putusan MK No. 4/PUU-X/2012** membatalkan Pasal 57 huruf d UU 24/2009 — warga & pihak swasta boleh memakai Garuda untuk aktivitas kemasyarakatan, atribut, kaus, logo organisasi swasta |
+
+**Dasar hukum — UU No. 24 Tahun 2009** (Pasal 56 & 57):
+- **Pasal 56**: Garuda Pancasila tidak boleh digunakan untuk kepentingan
+  komersial, dan tidak boleh dipergunakan untuk tujuan yang bertentangan
+  dengan nilai kebangsaan.
+- **Pasal 57 huruf a**: larangan yang telah dibatalkan oleh MK.
+- **Yang masih bisa dipidana** — yang masih dipidana:
+  1. **Merusak/menghina** (mencoret, menggambari, menodai) — Pasal 57 jo. Pasal 66,
+    isors embol(pidana 5 tahun / Rp 500 juta)
+  2. **Komersialisasi yang memberi kesan produk resmi negara** (pemalsuan
+     identitas resmi negara)
+
+**Alasan John's specific case valid:** Panitia Pemilihan Kepala Desa adalah
+lembaga *ad hoc* resmi yang dibentuk pemerintah desa untuk menyelenggarakan
+agenda negara/daerah — bukan entity komersial. Karena itu penggunaan Garuda di
+logo kepanitiaan **tidak masuk kategori komersialisasi ilegal**.
+
+**Kesimpulan: flag 🔴 pada commit sebelumnya DIBATALKAN.** Logo Garuda tetap
+ditampilkan, dan sekarang alasannya benar — bukan sekadar "John
+risiko sendiri".
+
+### Pelajaran untuk Hermes
+
+1. Jangan menyebut nomor UU tanpa memverifikasinya. Aku menyebut "UU 28/2014"
+   dengan yakin; John membetulkan dalam satu balasan.
+2. Saat John memberi koreksi hukum, perlakukan sebagai data yang lebih kuat
+   daripada asumsi awal aku — dan **koreksi catatan yang salah**, jangan hanya
+   menambah catatan baru.
+3. "John sudah memutuskan sendiri" BUKAN argumen hukum yang valid. Itu
+   cuma keputusan, bukan dasar hukum.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 warning
+- Render: "MASALAH", "HASIL", "Fleet & Warehouse", "Aplikasi Kasir &
+  Pemesanan", "E-Voting" → **semua 0**. Marquee (5 logo) + pain point tetap.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | Section WhyJohnDev sekarang hanya pain point + logo marquee. Kalau hasilnya terasa terlalu tipis untuk justify harga, opsi: tambah statistik, atau tambahkan satu blok "Bagaimana kami bekerja" (proses 4 langkah). |
+| 🟡 Sedang | Kalimat *"Logo klien yang menyetujui ditampilkan"* masih berdiri. Izin untuk 5 logo belum dikonfirmasi. |
+| 🟠 Info | Lambang negara: legal untuk_logo kepanitiaan resmi. Kalau nanti logo Garuda dipakai untuk konteks yang berbeda, tinjau ulang. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
