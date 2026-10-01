@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, Smartphone } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -58,9 +58,17 @@ function CaseCard({
     <article className="flex flex-col rounded-xl border border-border bg-card p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-base font-semibold text-foreground">
-            {study.client}
-          </h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-base font-semibold text-foreground">
+              {study.client}
+            </h3>
+            {study.kind === "mobile" && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+                <Smartphone aria-hidden="true" className="size-3" />
+                Android
+              </span>
+            )}
+          </div>
           <p className="mt-0.5 text-xs text-muted-foreground">
             {study.period}
           </p>
@@ -97,10 +105,17 @@ function CaseCard({
         </div>
       </div>
 
-      <p className="mt-5 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
-        <span className="font-medium text-foreground">Teknologi:</span>{" "}
-        {study.techHighlight}
-      </p>
+      <div className="mt-5 border-t border-border pt-4">
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          <span className="font-medium text-foreground">Teknologi:</span>{" "}
+          {study.techHighlight}
+        </p>
+        {study.proofNote && (
+          <p className="mt-2.5 rounded-lg bg-secondary px-3 py-2 text-xs leading-relaxed text-secondary-foreground">
+            {study.proofNote}
+          </p>
+        )}
+      </div>
     </article>
   );
 }
@@ -141,8 +156,8 @@ export function WhyJohnDevSection() {
             Sistem yang sudah berjalan
           </h3>
           <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-            Empat sistem produksi aktif. Buka tautannya untuk melihat langsung
-            &mdash; bukan sekadar portofolio.
+            Empat sistem yang sudah berjalan di produksi. Tiga bisa Anda buka
+            langsung sekarang; satu aplikasi Android didemokan saat konsultasi.
           </p>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">

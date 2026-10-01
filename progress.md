@@ -480,3 +480,77 @@ selalu punya jejak alasan.
 | 🟡 Sedang | Domain PPDB mati — kalau tidak sengaja, perbaiki; kalau tidak bisa dipulihkan, ganti domain atau hapus studi kasus ini. |
 | 🟡 Sedang | Copy 4 pain point + 3 studi kasus belum diuji ke calon klien. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+
+---
+
+## 2026-10-01 — Anonymisasi klien + Zaquiza masuk sebagai studi kasus
+
+### Keputusan John
+
+1. **Harga** — dipakai apa adanya. Tidak turun lagi.
+2. **Nama klien tidak akan dipublikasikan.**
+3. **Studi kasus PPDB (domain mati) diganti** dengan project Android
+   John — Aplikasi Kasir & Pemesanan Katering. Screenshots dikirim John.
+
+### Perubahan data
+
+- Semua `client` diganti **label industri**, bukan nama asli:
+  "Sistem Otomasi Print & ERP Internal", "Fleet & Warehouse Management",
+  "Sistem E-Voting & Data Voters", "Aplikasi Kasir & Pemesanan Katering".
+- Nama asli dipindah ke **komentar kode** sebagai referensi internal saja.
+- Studi kasus PPDB tetap ada di array dengan `published: false` +
+  `hiddenReason` (bukan dihapus), supaya jejaknya tercatat.
+- Studi kasus baru dapat field `kind: "web" | "mobile"` dan `proofNote`.
+
+### Temuan keamanan: nama klien bocor lewat HTML attribute
+
+Setelah anonymisasi `client`, masih ada kebocoran:
+
+```
+<article "zaquiza" ...>     → terbaca lewat View Source
+```
+
+**Akar masalah:** `id` dipakai sebagai React `key` pada `<article>`. Di
+server component, React mengirim string key itu sebagai **HTML attribute**,
+jadi terlihat di View Source meskipun tidak tampil di layar.
+
+**Perbaikan:** semua `id` dinetralkan agar tidak derivasi dari nama klien
+(`zaquiza` → `catering-pos`, `ata-galaxy` → `fleet-warehouse`,
+`printsmart` → `print-erp`, `pilkasetda` → `e-voting`,
+`ppdb` → `admission-portal`). Aturan ini ditulis di docblock `CaseStudy`.
+
+**Pelajaran:** anonymisasi di UI saja tidak cukup. Kalau string yang
+disamarkan masih muncul di atribut HTML, orang tetap bisa membacanya.
+Selalu verifikasi dengan `curl | grep`, bukan hanya dengan mata.
+
+**Catatan:** domain publik (`printsmart.my.id`, `pilkasetda.my.id`,
+`ata.typeapproval.co.id`) **tetap tampil** — itu memang link yang sengaja
+ditampilkan sebagai bukti. Kalau nanti tetap dianggap sensitif, hapus
+field `url` dan pakai `proofNote` seperti yang dilakukan pada studi kasus
+Android.
+
+### Perlakuan khusus studi kasus tanpa URL
+
+Aplikasi Android tidak punya link publik. Kartu sekarang:
+- menampilkan badge "Android" (ikon smartphone)
+- menampilkan `proofNote` di kotak abu: *"Demo layar dapat ditunjukkan saat konsultasi."*
+- subjudul grid disesuaikan: "Tiga bisa Anda buka langsung sekarang; satu
+  aplikasi Android didemokan saat konsultasi." — tidak lagi menjanjikan
+  semua studi bisa diklik.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅
+- Render: **4 kartu**, badge Android, proofNote, subjudul baru.
+- **Cek kebocoran** `curl | grep` untuk `zaquiza`, `Zaquiza`, `ata-galaxy`,
+  `pilkasetda`, `printsmart"`, `ppdb"`, `Ata Galaxy`, `PPDB SMK Amanah` →
+  semua 0 kecuali domain publik yang memang ditampilkan.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Domain klien masih terlihat di link** (`printsmart.my.id` dsb). Kalau nama domain ini menyentuh identitas klien, hapus field `url` — komponen sudah siap menanganinya lewat `proofNote`. |
+| 🟡 Sedang | Link klien harus **dipantau berkala**. printsmart & pilkasetda balas HTTP 200 saat dicek; kalau suatu saat mati, itu masalah yang sama seperti PPDB. |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+| 🟠 Info | Screenshot Zaquiza belum dimasukkan sebagai gambar — baru deskripsi teks + badge. Kalau mau, screenshot bisa jadi bagian Step 3.4 (tapi perlu izin & optimasi ukuran). |
