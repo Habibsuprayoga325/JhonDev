@@ -1,8 +1,10 @@
-import { ArrowRight, CheckCircle2, ExternalLink, Smartphone } from "lucide-react";
+import { ArrowRight, CheckCircle2, Smartphone } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { LogoMarquee } from "@/components/credibility/logo-marquee";
 import {
+  clientLogos,
   painPoints,
   publishedCaseStudies,
 } from "@/lib/credibility-data";
@@ -73,17 +75,6 @@ function CaseCard({
             {study.period}
           </p>
         </div>
-        {study.url && (
-          <a
-            href={study.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Buka ${study.client} di tab baru`}
-            className="shrink-0 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-          >
-            <ExternalLink aria-hidden="true" className="size-4" />
-          </a>
-        )}
       </div>
 
       <div className="mt-5 space-y-4 text-sm">
@@ -156,11 +147,21 @@ export function WhyJohnDevSection() {
             Sistem yang sudah berjalan
           </h3>
           <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
-            Empat sistem yang sudah berjalan di produksi. Tiga bisa Anda buka
-            langsung sekarang; satu aplikasi Android didemokan saat konsultasi.
+            Empat sistem yang sudah berjalan di produksi — untuk web, mobile,
+            sampai integrasi hardware.
           </p>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {/* Logo klien: bukti sosial tanpa menampilkan nama atau link. */}
+          {clientLogos.length > 0 && (
+            <div className="mt-12">
+              <LogoMarquee logos={clientLogos} />
+              <p className="mt-4 text-center text-xs text-muted-foreground">
+                Logo klien yang menyetujui ditampilkan sebagai bukti portofolio.
+              </p>
+            </div>
+          )}
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
             {publishedCaseStudies.map((study) => (
               <CaseCard key={study.id} study={study} />
             ))}

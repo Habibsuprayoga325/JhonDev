@@ -554,3 +554,78 @@ Aplikasi Android tidak punya link publik. Kartu sekarang:
 | 🟡 Sedang | Link klien harus **dipantau berkala**. printsmart & pilkasetda balas HTTP 200 saat dicek; kalau suatu saat mati, itu masalah yang sama seperti PPDB. |
 | 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
 | 🟠 Info | Screenshot Zaquiza belum dimasukkan sebagai gambar — baru deskripsi teks + badge. Kalau mau, screenshot bisa jadi bagian Step 3.4 (tapi perlu izin & optimasi ukuran). |
+
+---
+
+## 2026-10-01 — Logo marquee (ganti link klien) + anonymisasi final
+
+### Keputusan John
+
+Link klien **terlalu sensitif**. Diganti dengan **logo perusahaan saja**, dalam
+marquee animasi bergerak kiri ke kanan. John meminta ukuran logo disesuaikan
+oleh saya.
+
+### Proses normalisasi logo
+
+Tiga logo dari John (komposisi & warna dicek dengan Pillow lokal):
+
+| Sumber | Asli | Masalah | Keluaran |
+|---|---|---|---|
+| PrintSmart | 2802x388, **aspect 7.2:1** | Bukan logo, tapi banner — 7x lebih lebar dari logo lain | 220x31 (8,3 KB) |
+| Fleet & Warehouse | 1280x825 JPEG, **background putih** | Latar opaque, tidak menyatu | 148x96 (16,9 KB) |
+| Panpilkades | 1254x1254 PNG, **background putih** | Square, latar opaque | 96x96 (23,7 KB) |
+
+**Keputusan teknis:** dua batas, bukan satu — `MAX_H = 96` **dan**
+`MAX_W = 220`. Tanpa batas lebar, logo PrintSmart jadi 675px dan carousel
+terlihat rusak (satu logo 7x lebih besar dari yang lain).
+
+Background putih diubah jadi transparan dengan **threshold 242** (bukan
+>250`) supaya tepi antialiasing tidak meninggalkan halo putih. Logo PrintSmart
+sudah PNG transparan asli, jadi tidak diolah sama sekali —akninya bisa
+berhenti di tengah.
+
+### Perubahan privasi
+
+- **Semua `url` klien dihapus** dari studi kasus (3 domain publik dicabut).
+  Field `url` tetap ada di type, jadi kalau klien menyetujui publikasi URL
+  di kemudian hari tinggal diisi lagi.
+- Setiap studi kasus kini punya `proofNote` yang menjelaskan cara verifikasi:
+  *"Berjalan di server klien. Demo alur … dapat ditunjukkan saat konsultasi."*
+- `clientLogos` — data baru, **logo saja**: tanpa nama, tanpa link.
+  Alt text juga deskriptif, bukan nama klien.
+
+### Komponen marquee
+
+`src/components/credibility/logo-marquee.tsx` — **CSS animation, bukan JS**:
+- jalan di compositor, tidak memblokir main thread
+- tetap jalan sebelum JS selesai hydrate
+- satu `@keyframes marquee` translateX(0) → translateX(-50%)
+- list digandakan → `-50%` tepat satu siklus penuh, loop mulus tanpa celah
+
+**Aksesibilitas:**
+- `motion-reduce:animate-none` — animasi berhenti kalau user mengaktifkan
+  `prefers-reduced-motion` (WCAG 2.1)
+- copy kedua `aria-hidden` — logo tidak dibacakan dua kali
+- pause saat hover (`group-hover`)
+- mask gradient di tepi kiri/kanan supaya logo muncul ‒ hilang rapi
+
+`next/image` dipakai (bukan `<img>`) — warning LCP hilang, optimasi otomatis.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ **0 warning**
+- 3 logo dilayani HTTP 200 dengan Content-Length benar (8,5 / 17,3 / 24,2 KB)
+- `animate-marquee` ada di HTML, ketiga `/clients/*.png` ter-referensikan
+- **Cek kebocoran `curl | grep`**: printsmart, zaquiza, Zaquiza, pilkasetda,
+  typeapproval, "Ata Galaxy" → **semua 0**
+- **Link eksternal klien → 0** (sebelumnya 3)
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Dua gambar belum diproses.** John mengirim 5 gambar; 3 logo sudah dipakai. Dua sisanya (`image_14693e.png` 477x448 aspect 1.06, `image_c15167.png` 633x193 aspect 3.28) belum teridentifikasi — kemungkinan logo atau screenshot tambahan. Vision tool kena rate limit 429, jadi belum bisa saya pastikan. Perlu John konfirmasi. |
+| 🟡 Sedang | **Logo klien harus punya izin.** Menampilkan logo perusahaan pihak tanpa izin sama risky-nya dengan menyebut nama. Perlu konfirmasi John sudah minta izin ke ke-3 pemilik logo. |
+| 🟡 Sedang | Klaim "Logo klien yang menyetujui ditampilkan" **belum tentu benar** — kalimat itu sudah ditulis, tapi izinnya belum dikonfirmasi. Jangan dibiarkan berdiri kalau ternyata belum ada izin. |
+| 🟠 Info | `#harga`, `#kontak`, `/privacy`, `/terms` masih 404. |
+| 🟠 Info | `@keyframes marquee` dan `.animate-marquee` ada di `globals.css` di luar `@layer utilities` — tidak ter-override Tailwind karena specificity-nya unik. |

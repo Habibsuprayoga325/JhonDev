@@ -65,14 +65,17 @@ export type CaseStudy = {
   /** Keunggulan teknis yang membedakan dari agency biasa. */
   techHighlight: string;
   /**
-   * Link publik kalau ada.
-   * Kosong = studi kasus berbasis screenshot (mis. aplikasi Android yang tidak
-   * dipublikasikan). Kartu akan menampilkan `proofNote` sebagai gantinya.
+   * Link publik. **Kosong untuk semua studi kasus saat ini** — John memutuskan
+   * link klien terlalu sensitif (2026-10-01), jadi cukup logo di marquee.
+   * Field ini dipertahankan supaya klien menyetujui publikasi URL di kemudian hari.
    */
   url?: string;
   /** Kategori tampilan: web publik atau aplikasi mobile. */
   kind: "web" | "mobile";
-  /** Cara memverifikasi kalau tidak ada URL publik. */
+  /**
+   * Cara memverifikasi klaim tanpa URL publik — selalu diisi untuk studi
+   * kasus tanpa link, karena inilah yang menggantikan bukti yang bisa diklik.
+   */
   proofNote?: string;
   /** Status izin tampilkan. WAJIB true sebelum case dipakai di atas. */
   published: boolean;
@@ -92,8 +95,9 @@ export const caseStudies: readonly CaseStudy[] = [
       "Sistem self-service dengan payment gateway dan antrean dokumen otomatis. Cetak dieksekusi langsung ke printer tanpa menunggu order masuk manual.",
     techHighlight:
       "CUPS Print Server + raw printing protocol, payment gateway, dan job queue untuk antrean.",
-    url: "https://printsmart.my.id",
     kind: "web",
+    proofNote:
+      "Berjalan di server klien. Demo endpoint dan alur cetaknya dapat ditunjukkan saat konsultasi.",
     published: true,
   },
   {
@@ -106,8 +110,9 @@ export const caseStudies: readonly CaseStudy[] = [
       "Satu sistem untuk fleet, work order, inventori, dan log logistik dengan akses berbasis peran. Dipakai tim operasional di produksi.",
     techHighlight:
       "Laravel + PostgreSQL dengan indexing untuk query volume tinggi, plus role-based access control.",
-    url: "https://ata.typeapproval.co.id",
     kind: "web",
+    proofNote:
+      "Berjalan di infrastruktur klien. Demo dasbor dan alur work order-nya dapat ditunjukkan saat konsultasi.",
     published: true,
   },
   {
@@ -120,8 +125,9 @@ export const caseStudies: readonly CaseStudy[] = [
       "Validasi algoritmik otomatis plus rekap real-time untuk mencegah selisih antar kertas suara.",
     techHighlight:
       "Validasi otomatis dan tabulasi real-time dengan deteksi selisih.",
-    url: "https://pilkasetda.my.id",
     kind: "web",
+    proofNote:
+      "Berjalan di server klien. Demo alur validasi dan rekap real-time-nya dapat ditunjukkan saat konsultasi.",
     published: true,
   },
   {
@@ -160,3 +166,41 @@ export const caseStudies: readonly CaseStudy[] = [
 
 /** Studi kasus yang boleh ditampilkan (sudah disetujui & terverifikasi). */
 export const publishedCaseStudies = caseStudies.filter((c) => c.published);
+
+/**
+ * Logo untuk marquee "klien kami".
+ *
+ * PENTING: hanya logo, tanpa nama klien dan tanpa link. Ini murni
+ * bukti sosial — tidak ada teks yang bisa di-copy untuk menebak identitas.
+ *
+ * `width`/`height` wajib diisi supaya browser bisa menghitung rasio aspek
+ * sebelum gambar dimuat (mencegah layout shift / CLS).
+ */
+export type ClientLogo = {
+  src: string;
+  /** Alt text deskriptif — TIDAK boleh berisi nama klien. */
+  alt: string;
+  width: number;
+  height: number;
+};
+
+export const clientLogos: readonly ClientLogo[] = [
+  {
+    src: "/clients/print-erp.png",
+    alt: "Logo sistem otomasi print dan ERP internal",
+    width: 220,
+    height: 31,
+  },
+  {
+    src: "/clients/fleet-warehouse.png",
+    alt: "Logo sistem manajemen armada dan gudang",
+    width: 148,
+    height: 96,
+  },
+  {
+    src: "/clients/e-voting.png",
+    alt: "Logo sistem pemungutan suara elektronik",
+    width: 96,
+    height: 96,
+  },
+] as const;
