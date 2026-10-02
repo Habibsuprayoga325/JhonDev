@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { siteConfig } from "@/lib/site-config";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -16,43 +17,96 @@ const jakartaMono = JetBrains_Mono({
   display: "swap",
 });
 
+/**
+ * Metadata default untuk seluruh halaman.
+ *
+ * `metadataBase` membuat URL absolut untuk canonical, Open Graph, dan
+ * sitemap. HARUS sesuai domain produksi — kalau salah, semua URL absolut
+ * (termasuk yang dibagikan ke WhatsApp) akan menunjuk host yang keliru.
+ */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://johntech.web.id"),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "JohnDev — Sistem Operasional Bisnis Otomatis",
     template: "%s | JohnDev",
   },
   description:
-    "Berhenti mengelola bisnis di WhatsApp dan catatan. JohnDev membangun aplikasi web & mobile, ERP, POS, dan integrasi printer kasir yang disesuaikan dengan alur kerja bisnis Anda.",
+    "Berhenti mengelola bisnis di WhatsApp, buku, dan catatan. JohnDev membangun aplikasi web & mobile, ERP, POS, dan integrasi printer kasir yang disesuaikan dengan alur kerja bisnis Anda.",
+  applicationName: siteConfig.name,
   keywords: [
     "developer Indonesia",
     "software house Indonesia",
     "ERP custom",
-    "POS system",
+    "POS system Indonesia",
     "landing page bisnis",
-    "integrasi hardware",
-    "IoT Indonesia",
+    "integrasi printer kasir",
+    "aplikasi kasir Android",
+    "sistem operasional bisnis",
   ],
-  authors: [{ name: "John — JohnDev", url: "https://johntech.web.id" }],
-  creator: "JohnDev",
+  authors: [{ name: "John — JohnDev", url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.legalName,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "id_ID",
-    siteName: "JohnDev",
-    title: "JohnDev — Modernisasi Bisnis Anda ke Digital",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: "JohnDev — Sistem Operasional Bisnis Otomatis",
     description:
-      "Company profile, SaaS, ERP, POS, mobile app, dan integrasi hardware untuk pemilik bisnis.",
+      "Berhenti mengelola bisnis di WhatsApp, buku, dan catatan. POS, ERP, aplikasi mobile, dan integrasi printer kasir yang mengikuti alur kerja bisnis Anda.",
+    images: [
+      {
+        url: "/og-image",
+        width: 1200,
+        height: 630,
+        alt: "JohnDev — Sistem Operasional Bisnis Otomatis",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "JohnDev — Modernisasi Bisnis Anda ke Digital",
+    title: "JohnDev — Sistem Operasional Bisnis Otomatis",
     description:
-      "Company profile, SaaS, ERP, POS, mobile app, dan integrasi hardware untuk pemilik bisnis.",
+      "POS, ERP, aplikasi mobile, dan integrasi printer kasir untuk bisnis Anda.",
+    images: ["/og-image"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+  category: "technology",
+};
+
+/**
+ * JSON-LD LocalBusiness — membantu Google menampilkan kartu bisnis di
+ * hasil pencarian (nama, telepon, lokasi).
+ */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: siteConfig.legalName,
+  alternateName: siteConfig.name,
+  description:
+    "Pembuat perangkat lunak: company profile, ERP, POS, aplikasi mobile, dan integrasi hardware/IoT.",
+  url: siteConfig.url,
+  telephone: `+${siteConfig.contact.whatsapp}`,
+  email: siteConfig.contact.email,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Cikarang",
+    addressRegion: "Jawa Barat",
+    addressCountry: "ID",
+  },
+  areaServed: { "@type": "Country", name: "Indonesia" },
+  knowsLanguage: ["id-ID", "en"],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -73,6 +127,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <script
+          type="application/ld+json"
+          // Isi di bawah literal yang dikontrol developer, bukan input
+          // pengguna — tidak ada risiko injeksi di sini.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );

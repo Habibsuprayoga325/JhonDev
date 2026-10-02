@@ -972,3 +972,75 @@ berlaku. Kalau John berubah pikiran, **keduanya** harus diubah.
 | 🟡 Sedang | **Privacy Policy belum menyebut nama badan usaha atau lokasi server.** John menjawab badan usaha "belum ada", tapi **tidak menjawab pertanyaan hosting**. Kebijakan privasi normalnya menyebut di mana data diproses; sekarang tidak ada data diproses, jadi technically tidak wajib — tapi akan lebih kuat setelah hosting ditentukan. |
 | 🟡 Sedang | **Terms adalah dokumen hukum, bukan review copy.** Ini template generik, bukan hasil konsultasi hukum. Untuk project di bawah nilai tertentu template ini cukup; untuk kontrak bernilai besar, minta review oleh advokat. |
 | 🟠 Info | Sisa Step 5: 5.1 SEO metadata, 5.2 sitemap/robots, 5.4 error boundary + 404, 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |
+
+---
+
+## 2026-10-01 — Step 5.1–5.2: SEO metadata, OG image, sitemap, robots
+
+### Step 5.1 — Metadata & structured data
+
+**`src/app/layout.tsx`** — metadata default yang lengkap:
+- `metadataBase` dari `siteConfig.url` — **satu sumber kebenaran**, bukan URL
+  hardcode lagi (sebelumnya `johntech.web.id` ditulis langsung)
+- `title.template: "%s | JohnDev"` — halaman anak otomatis dapat suffix
+- `openGraph` + `twitter` dengan `summary_large_image` → preview penuh 1200x630
+- `robots.googleBot` dengan `max-image-preview: large` — tanpa ini, Google
+  sering menampilkan thumbnail kecil
+- `category: "technology"`
+- `applicationName`, `publisher`, `authors[].url`
+
+**JSON-LD `ProfessionalService`** —={
+  member of schema.org, allows Google
+to show a business card (nama, telepon, lokasi) di hasil pencarian.
+Fields: name, description, url, telephone, email, address, areaServed, knowsLanguage.
+
+**Catatan keamanan:** `dangerouslySetInnerHTML` dipakai untuk JSON-LD. Isinya
+100% literal developer-controlled, bukan input user — **tidak ada risiko injeksi**.
+Ini satu-satunya penggunaan di project; komentar di kode menjelaskan kenapa aman.
+
+### OG image dinamis (`src/app/og-image/route.tsx`)
+
+Dibuat dengan **`next/og`** — bukan file PNG yang di-export manual:
+- Selalu sinkron dengan warna brand (warna diambil sebagai literal yang sama)
+- Tidak perlu asset binary di repo
+- 1200x630, ~82 KB
+
+Verifikasi visual: **teks lengkap, tidak ada yang terpotong** — logo JD,
+headline, subheadline, nomor WhatsApp, dan domain semua terbaca.
+
+### Step 5.2 — Sitemap & robots
+
+**`src/app/sitemap.ts`** — 3 URL dengan `changefreq` & `priority` berbeda:
+`/` (monthly, 1.0), `/privacy` & `/terms` (yearly, 0.3).
+
+`lastModified` **sengaja satu konstanta global**, bukan `new Date()` per
+request — kalau dinamis, Google melihat sitemap berubah terus dan mengindeks
+ulang terus. Cukup diubah manual saat konten memang berubah.
+
+**`src/app/robots.ts`** — `allow: /`, plus `sitemap` dan `host`. Field `host`
+wajib diisi supaya search engine tahu URL kanonik; tanpa itu diambil dari
+domain tempat sitemap ditemukan.
+
+**Canonical per halaman** — `alternates.canonical` ditambahkan ke `/privacy`
+dan `/terms`.
+
+### Verifikasi
+
+- `npm run build` → ✅ (2 error diperbaiki: `export default` tidak valid
+  untuk OG route — harus named `GET`; dan baris JD yang tertimpa saat edit)
+  · `npm run lint` → ✅
+- Route: `/`, `/_not-found`, `/og-image`, `/privacy`, `/robots.txt`,
+  `/sitemap.xml`, `/terms` → **7 route**
+- `robots.txt` → berisi Host + Sitemap dengan domain benar
+- `sitemap.xml` → 3 URL, XML valid, `lastmod` konsisten
+- OG image → **PNG 1200x630, 82 KB**, diverifikasi visual
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **`metadataBase` = `johntech.web.id`, domain belum aktif.** Sebelum deploy, domain harus sudah diarahkan. Kalau tidak, OG image & canonical di shared links akan menunjuk domain yang belum ada. |
+| 🟡 Sedang | **JSON-LD menyertakan alamat fisik Cikarang.** Ini mengirim lokasi ke search engine — dengan satu beneficiality: bisa muncul di local pack. Tapi juga berarti lokasiBON office publishable. Kalau hanya area servis, hapus `address`. |
+| 🟠 Info | **Belum ada favicon custom** — masih `favicon.ico` default Next.js. Tampak di tab browser. |
+| 🟠 Info | `lastModified` sitemap harus di-update manual tiap konten berubah. Kalau lupa, Google masih tahu lewat HTTP Last-Modified. |
+| 🟠 Info | Sisa Step 5: 5.4 404 page, 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |

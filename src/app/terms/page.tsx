@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Syarat & Ketentuan",
   description:
     "Syarat dan ketentuan penggunaan website JohnDev Technology Solution.",
+  alternates: { canonical: "/terms" },
   robots: { index: true, follow: true },
 };
 

@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Kebijakan Privasi",
   description: "Kebijakan privasi JohnDev — bagaimana data Anda dikumpulkan, disimpan, dan digunakan.",
+  alternates: { canonical: "/privacy" },
   robots: { index: true, follow: true },
 };
 
