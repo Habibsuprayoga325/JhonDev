@@ -97,7 +97,7 @@ export const services: readonly ServiceCategory[] = [
     id: "saas",
     title: "SaaS & Multi-Tenant",
     description:
-      "Produk berlangganan denganisolasi data per pelanggan, tagihan, dan dashboard admin.",
+      "Produk berlangganan dengan isolasi data per pelanggan, tagihan, dan dashboard admin.",
     examples: [
       "Aplikasi berlangganan",
       "Multi-tenant dengan isolasi data",

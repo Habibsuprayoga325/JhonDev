@@ -899,3 +899,76 @@ Kalau memang ingin hilang, perlu keputusan eksplisit, bukan asumsi.
 | 🟡 Sedang | **Tidak ada form yang menyimpan lead.** Semua lead masuk lewat WhatsApp pribadi — tidak ada daftar, tidak bisa diukur funnel, tidak bisa dilacak konversinya. Ini **konsekuensi langsung** dari keputusan WhatsApp-first, bukan bug. Kalau nanti butuh data, barulah Email/DB masuk. |
 | 🟡 Sedang | `/privacy` dan `/terms` masih **404**, padahal footer menautkannya. Sekarang section kontak sudahолот privacy notice yang benar, jadi halaman legal jadi makin penting. |
 | 🟠 Info | Link `tel:` dan `mailto:` di section kontak — `mailto:` membuka mail client dengan email **baru**. Sudah dicek render. |
+
+---
+
+## 2026-10-01 — Step 5.3: Privacy & Terms + fix typo copy
+
+### Bug copy yang ditemukan lewat screenshot
+
+John mengirim screenshot katalog layanan; di sana terlihat teks
+**"Produk berlangganan denganisolasi data per pelanggan"** — kata
+"dengan" dan "isolasi" glued jadi satu.
+
+**Akar masalah:** glitch penulisan saatxmengedit `services-data.ts` di Step 2.1.
+Build, TypeScript, dan lint **tidak menangkapnya** — ini bukan kode rusak,
+hanya teks salah. Verifikasi yang menangkap adalah screenshot John.
+
+Scan seluruh `src/` untuk pola serupa (`dengan` + kata panjang) → hanya 1
+kemunculan. Sudah diperbaiki.
+
+**Pelajaran:** cek copy tidak bisa diandalkan pada build/lint. Butuh mata
+manusia — atau minimal render check per kata.
+
+### Step 5.3 — Privacy & Terms
+
+**Keputusan John:** badan usaha belum ada → ditulis sebagai
+CV/sole proprietorship, tanpa NIB.
+
+**`src/app/privacy/page.tsx`** — kebijakan privasi yang **cocok dengan
+arsitektur saat ini**:
+- "Website ini **tidak menyimpan data pribadi Anda**" — benar, karena form
+composing di client lalu dikirim ke WhatsApp.
+- Tidak ada cookie analitik, tidak ada form yang menyimpan di server
+- Data yang dikirim pengguna sendiri dijelaskan eksplisit: ada di WhatsApp, bukan
+  di server kami
+- **Catatan eksplisit:** kalau nanti ada form yang menyimpan data (mis. untuk
+  measuring conversion), kebijakan akan diperbarui dan retensi dicantumkan
+
+**`src/app/terms/page.tsx`** — 9 section:
+1. Penerimaan ketentuan
+2. Informasi di website (harga = estimasi; contoh hasil kerja = ringkasan;
+   logo klien = milik pemilik)
+3. Lingkup jasa
+4. Pembayaran (termin, harga tidak berubah kecuali ada scope change disetujui)
+5. **Hak cipta** — kode khusus untuk klien beralih ke klien; komponen
+   generik/template tetap milik JohnDev
+6. Batasan tanggung jawab
+7. Penyelesaian sengketa (musyawarah → hukum Indonesia)
+8. Perubahan ketentuan
+9. Kontak
+
+Kedua halaman punya `<Link>` kembali ke beranda dan `metadata` sendiri
+(title template "— | JohnDev" bekerja otomatis).
+
+### Dua klaim website yang kini jadi kontrak resmi
+
+"**Harga final tidak berubah di tengah jalan**" ada di pricing section, dan
+sekarang tercantum juga di Terms — jadi bukan sekadar copy, tapi ketentuan
+berlaku. Kalau John berubah pikiran, **keduanya** harus diubah.
+
+### Verifikasi
+
+- `npm run build` → ✅ (1 SyntaxError karena tag `</p>` hilang saat edit,
+  sudah diperbaiki) · `npm run lint` → ✅
+- Route: `/`, `/privacy`, `/terms` → **semua 200** (sebelumnya 404)
+- Title: "Kebijakan Privasi | JohnDev", "Syarat & Ketentuan | JohnDev"
+- **Tidak ada lagi link mati di seluruh website.**
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Privacy Policy belum menyebut nama badan usaha atau lokasi server.** John menjawab badan usaha "belum ada", tapi **tidak menjawab pertanyaan hosting**. Kebijakan privasi normalnya menyebut di mana data diproses; sekarang tidak ada data diproses, jadi technically tidak wajib — tapi akan lebih kuat setelah hosting ditentukan. |
+| 🟡 Sedang | **Terms adalah dokumen hukum, bukan review copy.** Ini template generik, bukan hasil konsultasi hukum. Untuk project di bawah nilai tertentu template ini cukup; untuk kontrak bernilai besar, minta review oleh advokat. |
+| 🟠 Info | Sisa Step 5: 5.1 SEO metadata, 5.2 sitemap/robots, 5.4 error boundary + 404, 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |
