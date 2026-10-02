@@ -1044,3 +1044,53 @@ dan `/terms`.
 | 🟠 Info | **Belum ada favicon custom** — masih `favicon.ico` default Next.js. Tampak di tab browser. |
 | 🟠 Info | `lastModified` sitemap harus di-update manual tiap konten berubah. Kalau lupa, Google masih tahu lewat HTTP Last-Modified. |
 | 🟠 Info | Sisa Step 5: 5.4 404 page, 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |
+
+---
+
+## 2026-10-01 — Step 5.4: 404 page + error boundary
+
+### 404 kustom (`src/app/not-found.tsx`)
+
+Menggantikan halaman default Next.js yang terlihat "belum jadi situs".
+
+- Heading "404 / Halaman ini tidak ditemukan"
+- **Tiga tautan utama selalu ada:** Kembali ke beranda, Tanya via WhatsApp,
+  dan link ke 4 section (Layanan, Harga, Mengapa JohnDev, Kontak).
+- Ditutup dengan link email untuk kasus yang tidak ada di daftar.
+
+**Prinsip:** pengunjung yang salah ketik **tidak boleh langsung pergi**. Karena
+itu setiap halaman 404 harus punya minimal satu jalur ke CTA. Itu sebabnya
+CTA WhatsApp ada di 404 — bukan cuma link navigasi.
+
+`robots: { index: false, follow: false }` — halaman 404 tidak boleh masuk
+indeks; isinya tidak offer apa pun dan hanya menambah duplikat.
+
+### Error boundary (`src/app/error.tsx`)
+
+Menangkap runtime error React. Tanpa ini, satu error akan mengganti seluruh
+halaman dengan **layar putih kosong** — pengunjung kehilangan navbar, footer,
+dan semua CTA.
+
+- Tombol **"Coba lagi"** memanggil `reset()` — beberapa error hanya sementara
+  (network hiccup, client state rusak), jadi dicoba dulu sebelum menyerah
+- **CTA WhatsApp tetap tersedia** di halaman error
+- `error.digest` ditampilkan sebagai kode — berguna saat John melapor "halaman
+  "halamannya error, kodenya ini")
+- `useEffect` log ke console; catatan di kode menyebut ini bisa diarahkan ke
+  layanan error monitoring di Step 5.5
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- `/halaman-ngawur-xyz` → **HTTP 404** dengan konten kustom
+- `noindex` → ada di meta tag
+- **Navbar tetap render** di halaman 404 (diverifikasi: "Mengapa JohnDev" ada)
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **Error hanya di-log ke console.** Kalau ada error di server John, tidak ada yang memberi tahu — baru ketahuan saat klien lapor. Step 5.5 (analytics) bisa jadi titik integrasi, tapi monitoring yang benar butuh layanan terpisah (Sentry, dsb). |
+| 🟡 Sedang | **`error.tsx` hanya menangani error di segment root.** Kalau nanti ada `src/app/blog/error.tsx`, error di sana tidak tertangkap oleh boundary ini. Belum relevan sekarang — satu halaman statis. |
+| 🟠 Info | Favicon masih default Next.js. |
+| 🟠 Info | Sisa Step 5: 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |
