@@ -10,7 +10,6 @@ function Logo() {
     <Link
       href="/"
       className="flex items-center gap-2.5 shrink-0"
-      aria-label={`${siteConfig.name} — beranda`}
     >
       <span
         aria-hidden="true"

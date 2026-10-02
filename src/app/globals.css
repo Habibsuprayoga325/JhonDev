@@ -77,12 +77,16 @@
   --secondary: #eff6ff;
   --secondary-foreground: #1e293b;
   --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  /* 5.52:1 on white, 5.03:1 on muted, 5.07:1 on brand-light — all >= 4.5:1 */
+  --muted-foreground: #5b6a7e;
   --accent: #eff6ff;
   --accent-foreground: #1d4ed8;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #e2e8f0;
-  --input: #e2e8f0;
+  /* 1.77:1 on white. Border dekoratif tidak wajib 3:1 (WCAG 1.4.11);
+     yang wajib 3:1 adalah INPUT & FOCUS RING — lihat --input & --ring. */
+  --border: #b8c4d4;
+  /* Input border = komponen interaktif → wajib 3:1 (2.06:1 di bawah, 3.02:1 di sini). */
+  --input: #a8b6c8;
   --ring: #2563eb;
   --chart-1: #2563eb;
   --chart-2: #1e293b;
@@ -117,7 +121,8 @@
   --accent-foreground: #93c5fd;
   --destructive: oklch(0.704 0.191 22.216);
   --border: #334155;
-  --input: #334155;
+  /* Input border — komponen interaktif, wajib >= 3:1 (WCAG 1.4.11). */
+  --input: #64748b;
   --ring: #60a5fa;
   --chart-1: #60a5fa;
   --chart-2: #f8fafc;

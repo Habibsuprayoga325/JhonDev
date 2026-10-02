@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
@@ -8,10 +6,13 @@ import type { ClientLogo } from "@/lib/credibility-data";
 /**
  * Logo marquee — logo klien bergerak horizontal tanpa henti.
  *
- * Kenapa CSS animation, bukan JS interval:
+ * **Server component, nol JS.** Animasi murni CSS, jadi tidak ada state,
+ * tidak ada hook, dan tidak perlu di-hydrate sama sekali. Ini penting:
+ * kalau komponen ini jadi client component, seluruh bundle React ikut
+ * ter-tanggal ke homepage untuk sesuatu yang sebenarnya statis.
+ *
  *  - jalan di GPU/compositor, tidak memblokir main thread
- *  - tidak menambah logic yang bisa salah (satu CSSkeyframes sederhana)
- *  - tetap jalan walau JS belum selesai hydrate
+ *  - tetap jalan walau JS belum selesai hydrate (atau gagal dimuat)
  *
  * Aksesibilitas:
  *  - `prefers-reduced-motion` menghentikan animasi (W3C WCAG 2.1)

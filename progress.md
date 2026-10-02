@@ -1094,3 +1094,105 @@ dan semua CTA.
 | 🟡 Sedang | **`error.tsx` hanya menangani error di segment root.** Kalau nanti ada `src/app/blog/error.tsx`, error di sana tidak tertangkap oleh boundary ini. Belum relevan sekarang — satu halaman statis. |
 | 🟠 Info | Favicon masih default Next.js. |
 | 🟠 Info | Sisa Step 5: 5.5 analytics, 5.6 a11y, 5.7 Lighthouse, 5.8 security review, 5.9 deploy. |
+
+---
+
+## 2026-10-01 — Step 5.6–5.7: Accessibility pass + Lighthouse
+
+### Step 5.6 — Audit kontras warna (WCAG AA)
+
+Audit manual rasio kontras dengan perhitungan luminance WCAG, bukan perkiraan
+mata. **Tiga kegagalan ditemukan:**
+
+| Elemen | Sebelum | Sesudah |-standard |
+|---|---|---|---|
+| `--muted-foreground` on `--muted` | 4.34:1 ❌ | **#5b6a7e** → 5.03:1 ✅ | 4.5:1 |
+| `--muted-foreground` on `--brand-light` | 4.37:1 ❌ | (sama) → 5.07:1 ✅ | 4.5:1 |
+| `--input` border (light) | 1.23:1 ❌ | **#a8b6c8** → 3.02:1 ✅ | 3:1 |
+| `--input` border (dark) | 1.72:1 ❌ | **#64748b** → 3.75:1 ✅ | 3:1 |
+
+**Penegasan penting:** `--border` **tidak** wajib 3:1. WCAG 1.4.11 hanya
+mensyaratkan kontras untuk **komponen interaktif** dan **grafis yang
+membedakan informasi** — border dekoratif pada kartu bebas. Yang wajib 3:1
+adalah `--input` (border field) dan `--ring` (focus indicator). Keduanya sudah
+lolos. `--border` dinaikkan ke #b8c4d4 (1.77:1) hanya demi keterbacaan visual.
+
+### Fix `label-content-name-mismatch`
+
+Lighthouse skor accessibility tetap 100, tapi menandai satu masalah valid:
+logo di header punya `aria-label="JohnDev — beranda"` sementara teks visible-nya
+**"JohnDev"**. Label yang tidak mengandung teks visible = pengguna screen reader
+mendengar "JohnDev — beranda", pembaca mata melihat "JohnDev" — tidak cocok.
+
+**Fix:** hapus `aria-label`. Link-nya sudah punya teks yang/self-explanatory,
+jadi accessible name-nya otomatis benar. Pola ini berlaku untuk SEMUA link: jangan
+pakai `aria-label` kalau ada visible text.
+
+### Struktur heading (sudah benar, diverifikasi)
+
+| Halaman | h1 | h2 | h3 | h4 |
+|---|---|---|---|---|
+| `/` | 1 | 7 | 13 | 4 |
+| `/privacy` | 1 | 3 | — | — |
+| `/terms` | 1 | 3 | — | — |
+
+Satu h1 per halaman, hierarki tidak melompat. Semua `<img>` punya `alt` (0 tanpa
+alt). Semua `<label>` punya `for` yang cocok (`kontak-topik`, `kontak-detail`).
+Skip-link sudah ada di root layout.
+
+### Step 5.7 — Lighthouse (headless Chrome, production build)
+
+**Hasil akhir:**
+
+| Kategori | Sebelum | Sesudah |
+|---|---|---|
+| Performance | 83 | **89** |
+| Accessibility | 100 | **100** |
+| Best Practices | 100 | **100** |
+| SEO | 100 | **100** |
+
+| Metrik | Sebelum | Sesudah |
+|---|---|---|
+| FCP | 1.7s | **1.2s** |
+| LCP | 3.6s | **3.2s** |
+| TBT | 300ms | **210ms** |
+| CLS | 0 | **0** |
+| Total size | 325 KiB | **315 KiB** |
+
+### Dua optimasi yang mengubah angka
+
+**1. Logo marquee → server component.** Komponen ini cuma CSS animation, tapi
+sudah ditandai `"use client"` — artinya seluruh bundle React ikut ditarik ke
+homepage untuk sesuatu yang sebenarnya 100% statis. Setelah `"use client"`
+dihapus: nol JS untuk marquee.
+
+**2. Mobile nav: Sheet (Base UI Dialog) → `<details>` native.** Sheet menarik
+focus-trap + portal + inertial scroll ke homepage — semua tidak perlu untuk
+menu navigasi 4 item. `<details>`/`<summary>` memberi perilaku buka/tutup tanpa
+satu byte JS. Hamburger→X juga CSS murni (`group-open:`).
+
+File `sheet.tsx` **dihapus** — tidak ada yang memakainya lagi.
+
+**Keterbatasan `<details>` yang disadari:** tanpa animasi buka/tutup (tidak
+perlu), tanpa focus trap (Escape-to-close bawaan browser), dan hanya browser
+modern (sesuai target).
+
+Satu-satunya client component yang tersisa adalah `contact-section.tsx` — dan
+itu memang butuh JS (controlled input). `error.tsx` juga client, tapi hanya
+dimuat saat error terjadi.
+
+### Verifikasi
+
+- `npm run build` → ✅ · `npm run lint` → ✅ 0 masalah
+- Lighthouse dijalankan terhadap **production build** (`next start`), bukan
+  dev server — dev mode selalu lebih lambat dan angkanya tidak relevan.
+- `label-content-name-mismatch` → **hilang** dari audit.
+
+### Risiko aktif
+
+| Sev | Temuan |
+|---|---|
+| 🟡 Sedang | **LCP masih 3.2s** (target <2.5s). Penyebabnya `Style & Layout` 1.7s — kemungkinan besar logo marquee dengan 10 `<Image>` (list digandakan). Solusi berikutnya: `<img>` biasa + `loading=lazy` untuk logo di bawah fold, bukan `next/image` (yang menambah JS). |
+| 🟡 Sedang | **Dark mode belum diuji** — token dark sudah di-audit kontrasnya, tapi belum ada UI untuk menyalakannya, jadi belum bisa dipakai user. |
+| 🟠 Info | Favicon masih default Next.js. |
+| 🟠 Info | Sisa: 5.5 analytics, 5.8 security review, 5.9 deploy. |
