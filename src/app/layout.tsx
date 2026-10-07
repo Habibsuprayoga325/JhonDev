@@ -84,6 +84,13 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
+  icons: {
+    icon: [
+      { url: "/johndev-icon-transparent.png", type: "image/png" },
+    ],
+    shortcut: "/johndev-icon-transparent.png",
+    apple: "/johndev-icon-transparent.png",
+  },
 };
 
 /**
