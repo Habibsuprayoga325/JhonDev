@@ -62,9 +62,6 @@ function LogoItem({ logo, isCopy }: { logo: ClientLogo; isCopy: boolean }) {
         alt={logo.alt}
         width={logo.width}
         height={logo.height}
-        // Quality 100 supaya logo vektor tidak buram setelah dikompresi.
-        // jadi buram setelah dikompresi ulang.
-        quality={100}
         className="h-auto max-h-14 w-auto max-w-[200px] object-contain opacity-95 transition-opacity duration-300 hover:opacity-100"
       />
     </div>

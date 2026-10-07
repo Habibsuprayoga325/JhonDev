@@ -76,7 +76,7 @@ export function MobileNav() {
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "h-11 w-full",
+              "h-11 w-full rounded-full bg-brand-navy hover:bg-brand-navy-soft text-white font-semibold shadow-xs",
             )}
           >
             Konsultasi Gratis

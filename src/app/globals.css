@@ -5,20 +5,23 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Brand tokens (lihat :root) — didaftarkan agar Tailwind menghasilkan
-     utility bg-brand-*, text-brand-*, border-brand-*. */
+  /* Brand tokens derived from JohnDev official logo */
   --color-brand-primary: var(--brand-primary);
   --color-brand-primary-hover: var(--brand-primary-hover);
   --color-brand-navy: var(--brand-navy);
   --color-brand-navy-soft: var(--brand-navy-soft);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-lime-hover: var(--brand-lime-hover);
   --color-brand-light: var(--brand-light);
   --color-brand-border: var(--brand-border);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: 'Onest', var(--font-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: 'Onest', var(--font-sans), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -58,102 +61,186 @@
 }
 
 :root {
-  /* ---- JohnDev brand palette (derived from logo) ---- */
-  --brand-primary: #2563eb;
-  --brand-primary-hover: #1d4ed8;
-  --brand-navy: #0f172a;
-  --brand-navy-soft: #1e293b;
-  --brand-light: #eff6ff;
-  --brand-border: #dbeafe;
+  /* ---- JohnDev official brand palette (derived from logo) ---- */
+  --brand-primary: #0062ff;
+  --brand-primary-hover: #004fd4;
+  --brand-navy: #060b28;
+  --brand-navy-soft: #0e1742;
+  --brand-blue: #0062ff;
+  --brand-cyan: #00d2ff;
+  --brand-lime: #8ce500;
+  --brand-lime-hover: #7bce00;
+  --brand-light: #f3f7fd;
+  --brand-border: #d2e3fc;
 
-  --background: oklch(1 0 0);
-  --foreground: #0f172a;
-  --card: oklch(1 0 0);
-  --card-foreground: #0f172a;
-  --popover: oklch(1 0 0);
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
+  --background: #fafbfd;
+  --foreground: #060b28;
+  --card: #ffffff;
+  --card-foreground: #060b28;
+  --popover: #ffffff;
+  --popover-foreground: #060b28;
+  --primary: #0062ff;
   --primary-foreground: #ffffff;
-  --secondary: #eff6ff;
-  --secondary-foreground: #1e293b;
-  --muted: #f1f5f9;
-  /* 5.52:1 on white, 5.03:1 on muted, 5.07:1 on brand-light — all >= 4.5:1 */
-  --muted-foreground: #5b6a7e;
-  --accent: #eff6ff;
-  --accent-foreground: #1d4ed8;
+  --secondary: #f0f4fc;
+  --secondary-foreground: #0e1742;
+  --muted: #f1f5fa;
+  --muted-foreground: #5a667d;
+  --accent: #f0f6ff;
+  --accent-foreground: #0062ff;
   --destructive: oklch(0.577 0.245 27.325);
-  /* 1.77:1 on white. Border dekoratif tidak wajib 3:1 (WCAG 1.4.11);
-     yang wajib 3:1 adalah INPUT & FOCUS RING — lihat --input & --ring. */
-  --border: #b8c4d4;
-  /* Input border = komponen interaktif → wajib 3:1 (2.06:1 di bawah, 3.02:1 di sini). */
-  --input: #a8b6c8;
-  --ring: #2563eb;
-  --chart-1: #2563eb;
-  --chart-2: #1e293b;
-  --chart-3: #64748b;
-  --chart-4: #93c5fd;
-  --chart-5: #dbeafe;
-  --radius: 0.625rem;
+  --border: #e1e7f0;
+  --input: #9cb1cb;
+  --ring: #0062ff;
+  --chart-1: #0062ff;
+  --chart-2: #060b28;
+  --chart-3: #00d2ff;
+  --chart-4: #8ce500;
+  --chart-5: #d2e3fc;
+  --radius: 0.75rem;
   --sidebar: #f8fafc;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #2563eb;
+  --sidebar-foreground: #060b28;
+  --sidebar-primary: #0062ff;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eff6ff;
-  --sidebar-accent-foreground: #1d4ed8;
+  --sidebar-accent: #f0f6ff;
+  --sidebar-accent-foreground: #0062ff;
   --sidebar-border: #e2e8f0;
-  --sidebar-ring: #2563eb;
+  --sidebar-ring: #0062ff;
 }
 
 .dark {
-  --background: #0f172a;
+  --background: #060b28;
   --foreground: #f8fafc;
-  --card: #1e293b;
+  --card: #0c1438;
   --card-foreground: #f8fafc;
-  --popover: #1e293b;
+  --popover: #0c1438;
   --popover-foreground: #f8fafc;
-  --primary: #60a5fa;
-  --primary-foreground: #0f172a;
-  --secondary: #1e293b;
+  --primary: #00d2ff;
+  --primary-foreground: #060b28;
+  --secondary: #101a47;
   --secondary-foreground: #f8fafc;
-  --muted: #1e293b;
+  --muted: #101a47;
   --muted-foreground: #94a3b8;
-  --accent: #1e293b;
-  --accent-foreground: #93c5fd;
+  --accent: #101a47;
+  --accent-foreground: #00d2ff;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #334155;
-  /* Input border — komponen interaktif, wajib >= 3:1 (WCAG 1.4.11). */
-  --input: #64748b;
-  --ring: #60a5fa;
-  --chart-1: #60a5fa;
-  --chart-2: #f8fafc;
-  --chart-3: #94a3b8;
-  --chart-4: #3b82f6;
+  --border: #1a2558;
+  --input: #2a3b7d;
+  --ring: #00d2ff;
+  --chart-1: #00d2ff;
+  --chart-2: #8ce500;
+  --chart-3: #0062ff;
+  --chart-4: #60a5fa;
   --chart-5: #1e40af;
-  --sidebar: #1e293b;
+  --sidebar: #0c1438;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #60a5fa;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #334155;
+  --sidebar-primary: #00d2ff;
+  --sidebar-primary-foreground: #060b28;
+  --sidebar-accent: #1a2558;
   --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: #334155;
-  --sidebar-ring: #60a5fa;
+  --sidebar-border: #1a2558;
+  --sidebar-ring: #00d2ff;
 }
 
-/* Logo marquee — geser kontinu ke kiri, loop mulus.
-   -50% karena list digandakan (lihat logo-marquee.tsx), jadi tepat satu
-   siklus penuh tanpa celah. */
+/* Animations */
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.08); }
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes sweepGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @layer utilities {
   .animate-marquee {
     animation: marquee 38s linear infinite;
+  }
+  .animate-float {
+    animation: floatSlow 5s ease-in-out infinite;
+  }
+  .animate-float-delayed {
+    animation: floatReverse 6s ease-in-out infinite 1s;
+  }
+  .animate-pulse-glow {
+    animation: pulseGlow 4s ease-in-out infinite;
+  }
+  .animate-orbit {
+    animation: orbitSpin 32s linear infinite;
+  }
+  .animate-counter-orbit {
+    animation: counterSpin 32s linear infinite;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #060b28 0%, #0062ff 60%, #00d2ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #0062ff 0%, #00d2ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-lime {
+    background: linear-gradient(135deg, #0062ff 0%, #8ce500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(225, 231, 240, 0.8);
+    box-shadow: 0 20px 40px -15px rgba(6, 11, 40, 0.06), 0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+  }
+
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(210, 227, 252, 0.6);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 35px -5px rgba(0, 210, 255, 0.35);
+  }
+
+  .glow-lime {
+    box-shadow: 0 0 35px -5px rgba(140, 229, 0, 0.35);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 35px -5px rgba(0, 98, 255, 0.35);
   }
 }
 
@@ -172,5 +259,7 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 }

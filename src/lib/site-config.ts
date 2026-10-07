@@ -27,8 +27,8 @@ export const siteConfig = {
   },
 
   nav: [
-    { label: "Mengapa JohnDev", href: "#why-jhondev" },
     { label: "Layanan", href: "#layanan" },
+    { label: "Mengapa JohnDev", href: "#why-jhondev" },
     { label: "Harga", href: "#harga" },
     { label: "Kontak", href: "#kontak" },
   ],

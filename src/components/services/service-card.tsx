@@ -26,55 +26,50 @@ export function ServiceCard({
   return (
     <article
       className={cn(
-        "group flex flex-col rounded-xl border bg-card p-6 transition-all",
-        "hover:border-brand-primary/40 hover:shadow-sm",
-        featured && "border-brand-primary/30",
+        "group relative flex flex-col rounded-2xl border bg-white p-6 sm:p-7 transition-all duration-300",
+        "border-border/80 hover:border-brand-primary/50 hover:shadow-xl hover:-translate-y-1",
+        featured && "border-brand-primary/40 shadow-sm ring-1 ring-brand-primary/10",
       )}
     >
+      {/* Subtle top accent bar on hover */}
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-navy via-brand-primary to-brand-cyan opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
+
       <div className="flex items-start justify-between gap-3">
-        <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-brand-light text-brand-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand-light text-brand-primary transition-all duration-300 group-hover:scale-105 group-hover:bg-gradient-to-tr group-hover:from-brand-navy group-hover:to-brand-primary group-hover:text-white group-hover:shadow-md">
           <ServiceGlyph name={service.icon} />
         </span>
-        <Badge
-          variant="secondary"
-          className="shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium"
-        >
+        <span className="shrink-0 rounded-md px-2.5 py-1 text-[11px] font-mono font-semibold uppercase tracking-wider bg-brand-light text-brand-primary border border-brand-border/60">
           {service.badge}
-        </Badge>
+        </span>
       </div>
 
-      <h3 className="mt-5 text-base font-semibold leading-snug text-foreground">
+      <h3 className="mt-5 text-lg font-bold leading-snug text-foreground group-hover:text-brand-primary transition-colors">
         {service.title}
       </h3>
 
-      <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         {service.description}
       </p>
 
-      <ul className="mt-4 space-y-2">
+      <ul className="mt-5 space-y-2.5 flex-1">
         {service.examples.map((example) => (
           <li
             key={example}
-            className="flex items-start gap-2 text-sm text-muted-foreground"
+            className="flex items-start gap-2.5 text-sm text-foreground/80"
           >
             <Check
               aria-hidden="true"
               className="mt-0.5 size-4 shrink-0 text-brand-primary"
             />
-            {example}
+            <span>{example}</span>
           </li>
         ))}
       </ul>
 
-      <div className="mt-6 flex items-end justify-between gap-3 border-t border-border pt-4">
-        <div>
-          <span className="block text-xs text-muted-foreground">
-            Mulai dari
-          </span>
-          <span className="block text-base font-semibold text-foreground">
-            {service.priceFrom}
-          </span>
-        </div>
+      <div className="mt-6 flex items-center justify-between gap-3 border-t border-border/80 pt-4">
+        <span className="text-[11px] font-mono font-medium text-muted-foreground">
+          Arsitektur Kustom &bull; Full Ownership
+        </span>
 
         <a
           href={cta}
@@ -82,10 +77,10 @@ export function ServiceCard({
           rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: "outline", size: "sm" }),
-            "h-9 shrink-0 px-3.5",
+            "h-8.5 shrink-0 rounded-full px-3.5 text-xs font-semibold border-border/80 hover:border-brand-primary hover:bg-brand-primary hover:text-white transition-all",
           )}
         >
-          Tanya
+          Konsultasi Solusi &rarr;
           <span className="sr-only"> tentang {service.title} via WhatsApp</span>
         </a>
       </div>
