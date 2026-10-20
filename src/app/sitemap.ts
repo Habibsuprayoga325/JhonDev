@@ -9,26 +9,26 @@ import { siteConfig } from "@/lib/site-config";
  * dan mengindeks ulang terus. достаточно satu tanggal global yang diubah
  * saat konten memang berubah.
  */
-const LAST_MODIFIED = new Date("2026-10-01");
+const LAST_MODIFIED = new Date("2026-10-20");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${siteConfig.url}/`,
       lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly",
-      priority: 1,
+      changeFrequency: "weekly",
+      priority: 1.0,
     },
     {
       url: `${siteConfig.url}/privacy`,
       lastModified: LAST_MODIFIED,
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
       priority: 0.3,
     },
     {
       url: `${siteConfig.url}/terms`,
       lastModified: LAST_MODIFIED,
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
       priority: 0.3,
     },
   ];

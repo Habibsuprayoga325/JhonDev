@@ -33,8 +33,10 @@ function TierCard({ tier }: { tier: PricingTier }) {
         </span>
       )}
 
-      <h3 className="text-xl font-bold text-foreground">{tier.name}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground min-h-[40px]">
+      <h3 className="text-lg sm:text-xl font-bold leading-snug text-foreground min-h-[56px] flex items-start">
+        {tier.name}
+      </h3>
+      <p className="mt-2 text-xs sm:text-sm leading-relaxed text-muted-foreground min-h-[48px]">
         {tier.bestFor}
       </p>
 
@@ -133,8 +135,7 @@ export function PricingSection({ tiers }: { tiers: readonly PricingTier[] }) {
             Investasi Transparan Tanpa Biaya Tersembunyi
           </h2>
           <p className="mt-4 text-base sm:text-lg leading-relaxed text-muted-foreground text-pretty max-w-2xl">
-            Bukan biaya sewa tanpa henti. Anda berinvestasi untuk sistem yang menjadi aset milik Anda seutuhnya,
-            dengan alur pengerjaan dan pelunasan bertahap.
+            Katalog estimasi biaya jasa pembuatan aplikasi kasir POS toko, sistem ERP kustom, aplikasi mobile Android, dan website company profile bisnis. Sistem menjadi aset milik Anda seutuhnya sekali bayar tanpa biaya langganan bulanan.
           </p>
 
           {/* 3 Kejelasan untuk Kenyamanan Klien */}

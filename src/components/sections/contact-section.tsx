@@ -25,7 +25,7 @@ ${cleanBody ? `\nCatatan kebutuhan:\n${cleanBody}` : ""}`.trim();
 
 export function ContactSection() {
   const [name, setName] = useState("");
-  const [topic, setTopic] = useState("Point of Sale (POS) & Kasir Pintar");
+  const [topic, setTopic] = useState("Jasa Aplikasi Kasir POS & Sistem Manajemen Toko");
   const [details, setDetails] = useState("");
 
   const message = buildMessage(name, topic, details);
@@ -91,12 +91,12 @@ export function ContactSection() {
                 onChange={(e) => setTopic(e.target.value)}
                 className="h-12 w-full rounded-xl border border-border/80 bg-[#f8fafc] px-4 text-sm font-medium text-foreground focus:bg-white focus:border-brand-primary focus:outline-none transition-all"
               >
-                <option>Point of Sale (POS) &amp; Kasir Pintar</option>
-                <option>ERP &amp; Manajemen Inventori Gudang</option>
-                <option>Pengembangan Web App &amp; SaaS</option>
-                <option>Aplikasi Mobile (Android / iOS)</option>
-                <option>Integrasi Hardware (Printer Thermal &amp; Barcode)</option>
-                <option>Integrasi WhatsApp API &amp; Gateway Notifikasi</option>
+                <option>Jasa Aplikasi Kasir POS &amp; Sistem Manajemen Toko</option>
+                <option>Jasa Pembuatan Sistem ERP Kustom &amp; Otomasi Hardware</option>
+                <option>Jasa Pembuatan Website &amp; Company Profile Bisnis</option>
+                <option>Jasa Pembuatan Aplikasi Mobile Android (Custom App)</option>
+                <option>Integrasi Hardware (Printer Thermal &amp; Kiosk Kustom)</option>
+                <option>Pengembangan Web App &amp; Platform SaaS</option>
                 <option>Custom Enterprise Solution</option>
               </select>
             </div>

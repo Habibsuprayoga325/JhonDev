@@ -112,11 +112,11 @@ export function Hero() {
               </span>
             </h1>
 
-            {/* Subheadline yang padat & profesional */}
+            {/* Subheadline yang padat, profesional & kaya kata kunci SEO */}
             <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-muted-foreground text-pretty">
               Berhenti mengelola bisnis dengan catatan terpisah dan chat WhatsApp yang menumpuk.
-              JohnDev merancang aplikasi POS kasir, ERP inventori, dan software kustom yang 100%
-              disesuaikan dengan alur kerja unik bisnis Anda.
+              JohnDev adalah software house spesialis jasa pembuatan aplikasi kasir POS toko, sistem ERP kustom
+              pergudangan, aplikasi mobile Android, dan website company profile yang 100% disesuaikan dengan alur kerja bisnis Anda di Bekasi, Cikarang, dan Jabodetabek.
             </p>
 
             {/* Tombol CTA */}

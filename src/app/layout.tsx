@@ -28,21 +28,42 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "JohnDev — Sistem Operasional Bisnis Otomatis",
-    template: "%s | JohnDev",
+    default: "JohnDev — Jasa Pembuatan Aplikasi Kasir POS, ERP Custom & Website Bisnis",
+    template: "%s | JohnDev Software House",
   },
   description:
-    "Berhenti mengelola bisnis di WhatsApp, buku, dan catatan. JohnDev membangun aplikasi web & mobile, ERP, POS, dan integrasi printer kasir yang disesuaikan dengan alur kerja bisnis Anda.",
+    "Software house & jasa pembuatan aplikasi kasir POS custom sekali bayar, sistem ERP kustom, aplikasi mobile Android native, dan website company profile profesional teroptimasi SEO di Cikarang, Bekasi, Jabodetabek.",
   applicationName: siteConfig.name,
   keywords: [
-    "developer Indonesia",
-    "software house Indonesia",
-    "ERP custom",
-    "POS system Indonesia",
-    "landing page bisnis",
-    "integrasi printer kasir",
-    "aplikasi kasir Android",
-    "sistem operasional bisnis",
+    "jasa pembuatan aplikasi kasir pos",
+    "jasa aplikasi kasir pos custom",
+    "software kasir toko tanpa langganan",
+    "aplikasi kasir umkm sekali bayar",
+    "sistem manajemen stok barang gudang",
+    "dashboard laporan penjualan harian real-time",
+    "integrasi payment gateway qris midtrans",
+    "jasa bikin erp custom",
+    "jasa pembuatan sistem erp custom",
+    "software erp gudang dan manufaktur lokal",
+    "sistem manajemen spk",
+    "integrasi printer thermal cups",
+    "sistem otomasi cetak kiosk self-service",
+    "role-based access control rbac postgresql",
+    "jasa buat aplikasi android",
+    "jasa pembuatan aplikasi mobile perusahaan",
+    "developer aplikasi android native",
+    "aplikasi tracking pesanan dan inventaris",
+    "publikasi aplikasi google play store",
+    "jasa pembuatan website company profile",
+    "jasa pembuatan website company profile bisnis",
+    "jasa bikin web profesional",
+    "landing page responsif mobile-friendly",
+    "web portofolio bisnis teroptimasi seo",
+    "domain dan hosting ssl gratis",
+    "software house murah bekasi",
+    "software house cikarang bekasi",
+    "software house system integrator bekasi jabodetabek",
+    "jasa web developer cikarang bekasi",
   ],
   authors: [{ name: "John — JohnDev", url: siteConfig.url }],
   creator: siteConfig.name,
@@ -53,23 +74,23 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: "JohnDev — Sistem Operasional Bisnis Otomatis",
+    title: "JohnDev — Jasa Pembuatan Aplikasi Kasir POS, ERP Custom & Website Bisnis",
     description:
-      "Berhenti mengelola bisnis di WhatsApp, buku, dan catatan. POS, ERP, aplikasi mobile, dan integrasi printer kasir yang mengikuti alur kerja bisnis Anda.",
+      "Jasa pembuatan aplikasi kasir POS custom sekali bayar, software ERP gudang, aplikasi Android native, dan website company profile profesional di Cikarang, Bekasi, Jabodetabek.",
     images: [
       {
         url: "/og-image",
         width: 1200,
         height: 630,
-        alt: "JohnDev — Sistem Operasional Bisnis Otomatis",
+        alt: "JohnDev — Jasa Pembuatan Aplikasi Kasir POS, ERP Custom & Website Bisnis",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "JohnDev — Sistem Operasional Bisnis Otomatis",
+    title: "JohnDev — Jasa Pembuatan Aplikasi Kasir POS, ERP Custom & Website Bisnis",
     description:
-      "POS, ERP, aplikasi mobile, dan integrasi printer kasir untuk bisnis Anda.",
+      "Jasa pembuatan aplikasi kasir POS custom, software ERP pergudangan, aplikasi mobile Android, dan website company profile di Bekasi & Jabodetabek.",
     images: ["/og-image"],
   },
   robots: {
@@ -94,8 +115,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * JSON-LD LocalBusiness — membantu Google menampilkan kartu bisnis di
- * hasil pencarian (nama, telepon, lokasi).
+ * JSON-LD Schema.org — ProfessionalService & OfferCatalog
+ * Memberi sinyal kaya ke Googlebot untuk Rich Snippets (Layanan, Harga, Lokasi, Kontak).
  */
 const jsonLd = {
   "@context": "https://schema.org",
@@ -103,17 +124,82 @@ const jsonLd = {
   name: siteConfig.legalName,
   alternateName: siteConfig.name,
   description:
-    "Pembuat perangkat lunak: company profile, ERP, POS, aplikasi mobile, dan integrasi hardware/IoT.",
+    "Software house dan jasa pembuatan aplikasi kasir POS custom sekali bayar, sistem ERP kustom, aplikasi mobile Android native, dan website company profile profesional.",
   url: siteConfig.url,
+  logo: `${siteConfig.url}/johndev-icon-transparent.png`,
+  image: `${siteConfig.url}/og-image`,
   telephone: `+${siteConfig.contact.whatsapp}`,
   email: siteConfig.contact.email,
+  priceRange: "Rp 2.500.000 - Rp 25.000.000",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Cikarang",
+    streetAddress: "Cikarang",
+    addressLocality: "Cikarang, Kabupaten Bekasi",
     addressRegion: "Jawa Barat",
+    postalCode: "17530",
     addressCountry: "ID",
   },
-  areaServed: { "@type": "Country", name: "Indonesia" },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -6.3056,
+    longitude: 107.1511,
+  },
+  areaServed: [
+    { "@type": "City", name: "Bekasi" },
+    { "@type": "City", name: "Cikarang" },
+    { "@type": "City", name: "Jakarta" },
+    { "@type": "Country", name: "Indonesia" },
+  ],
+  sameAs: [
+    siteConfig.social.github,
+    siteConfig.social.linkedin,
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Layanan Rekayasa Perangkat Lunak JohnDev",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Jasa Pembuatan Website & Company Profile Bisnis",
+          description: "Jasa bikin website company profile profesional, landing page responsif mobile-friendly, teroptimasi SEO Googlebot dengan SSL gratis.",
+        },
+        price: "2500000",
+        priceCurrency: "IDR",
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Jasa Aplikasi Kasir POS & Sistem Manajemen Toko",
+          description: "Software aplikasi kasir POS toko UMKM sekali bayar tanpa langganan, manajemen stok barang gudang, dashboard laporan penjualan, dan integrasi QRIS Midtrans.",
+        },
+        price: "9000000",
+        priceCurrency: "IDR",
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Jasa Pembuatan Aplikasi Mobile Android (Custom App)",
+          description: "Jasa pembuatan aplikasi Android native untuk tim operasional lapangan, sales, dan pelanggan dengan publikasi Google Play Store.",
+        },
+        price: "11000000",
+        priceCurrency: "IDR",
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Jasa Pembuatan Sistem ERP Kustom & Otomasi Hardware (IoT)",
+          description: "Software ERP kustom pergudangan, manufaktur, otomasi kiosk self-service, integrasi CUPS print server printer thermal, dan database PostgreSQL.",
+        },
+        price: "22500000",
+        priceCurrency: "IDR",
+      },
+    ],
+  },
   knowsLanguage: ["id-ID", "en"],
 };
 

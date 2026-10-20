@@ -39,13 +39,13 @@ export type ServiceIcon =
 export const services: readonly ServiceCategory[] = [
   {
     id: "company-profile",
-    title: "Company Profile & Landing Page",
+    title: "Website & Company Profile Bisnis",
     description:
-      "Website yang menempatkan bisnis Anda di posisi yang tepat — cepat, rapi di HP, dan siap dari sisi SEO.",
+      "Jasa pembuatan website company profile dan landing page profesional responsif, cepat diakses dari HP, dan teroptimasi SEO Google.",
     examples: [
-      "Company profile korporat",
-      "Landing page kampanye / promosi",
-      "Portofolio & katalog produk",
+      "Company profile korporat & portofolio bisnis",
+      "Landing page promosi mobile-friendly",
+      "Katalog produk terintegrasi WhatsApp",
     ],
     priceFrom: "Rp 2,5 juta",
     icon: "globe",
@@ -53,13 +53,13 @@ export const services: readonly ServiceCategory[] = [
   },
   {
     id: "pos",
-    title: "Point of Sale (POS)",
+    title: "Aplikasi Kasir POS & Manajemen Toko",
     description:
-      "Kasir yang tetap jalan saat internet mati, dengan sinkronisasi otomatis saat koneksi kembali.",
+      "Software kasir POS toko sekali bayar tanpa langganan bulanan, tetap beroperasi saat offline, dengan rekap transaksi otomatis.",
     examples: [
-      "Kasir Android untuk warung & cafe",
-      "Integrasi payment gateway",
-      "Cetak struk ke printer thermal",
+      "Kasir POS warung, cafe, resto & retail",
+      "Integrasi QRIS Midtrans & cetak struk thermal",
+      "Laporan penjualan harian & stok barang real-time",
     ],
     priceFrom: "Rp 7,5 juta",
     icon: "pos",
@@ -67,13 +67,13 @@ export const services: readonly ServiceCategory[] = [
   },
   {
     id: "erp",
-    title: "ERP Custom",
+    title: "Sistem ERP Kustom & Pergudangan",
     description:
-      "Modul operasional yang mengikuti alur kerja Anda — bukan paket bawaan yang harus dibelajarkan ulang.",
+      "Jasa pembuatan sistem ERP custom untuk manajemen gudang, manufaktur, dan alur kerja operasional unik tanpa batasan software bawaan.",
     examples: [
-      "Manajemen gudang & inventori",
-      "Fleet & logistik",
-      "Modul kustom Odoo",
+      "Manajemen inventori gudang & logistik",
+      "Sistem Surat Perintah Kerja (SPK) & produksi",
+      "Role-Based Access Control (RBAC) database PostgreSQL",
     ],
     priceFrom: "Rp 22,5 juta",
     icon: "erp",
@@ -81,13 +81,13 @@ export const services: readonly ServiceCategory[] = [
   },
   {
     id: "mobile",
-    title: "Aplikasi Mobile",
+    title: "Aplikasi Mobile Android (Custom App)",
     description:
-      "Aplikasi untuk tim lapangan dan pelanggan — Android native maupun Flutter lintas platform.",
+      "Jasa buat aplikasi Android native yang ringan, stabil, dan terhubung langsung ke database cloud untuk tim sales dan pelanggan.",
     examples: [
-      "Aplikasi kasir & order",
-      "App operasional dengan role berbeda",
-      "Integrasi dengan sistem web",
+      "Aplikasi katalog menu & pemesanan mandiri",
+      "Aplikasi tracking operasional sales lapangan",
+      "Publikasi siap tayang di Google Play Store",
     ],
     priceFrom: "Rp 11 juta",
     icon: "mobile",
@@ -95,13 +95,13 @@ export const services: readonly ServiceCategory[] = [
   },
   {
     id: "saas",
-    title: "SaaS & Multi-Tenant",
+    title: "SaaS & Platform Multi-Tenant",
     description:
-      "Produk berlangganan dengan isolasi data per pelanggan, tagihan, dan dashboard admin.",
+      "Pengembangan aplikasi web berbasis langganan dengan isolasi database per pelanggan, auto-billing, dan dashboard superadmin.",
     examples: [
-      "Aplikasi berlangganan",
-      "Multi-tenant dengan isolasi data",
-      "Billing & subscription management",
+      "Aplikasi bisnis model SaaS berlangganan",
+      "Arsitektur multi-tenant data terisolasi",
+      "Integrasi payment gateway recurring billing",
     ],
     priceFrom: "Rp 18 juta",
     icon: "saas",
@@ -109,13 +109,13 @@ export const services: readonly ServiceCategory[] = [
   },
   {
     id: "iot",
-    title: "IoT & Integrasi Hardware",
+    title: "Otomasi Hardware & Kiosk IoT",
     description:
-      "Menyambungkan sistem digital ke perangkat di lapangan — printer, scanner, timbangan, sensor.",
+      "Integrasi sistem perangkat lunak ke perangkat keras lapangan: printer kasir thermal, barcode scanner, timbangan digital, dan kiosk cetak.",
     examples: [
-      "Auto-print dari server (CUPS)",
-      "Integrasi printer kasir & timbangan digital",
-      "Sensor & monitoring perangkat",
+      "Auto-print server CUPS & nota antrean",
+      "Integrasi scanner barcode & timbangan gudang",
+      "Sistem kiosk self-service otomatis",
     ],
     priceFrom: "Rp 9 juta",
     icon: "iot",
